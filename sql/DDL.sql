@@ -112,6 +112,7 @@ CREATE OR REPLACE TABLE TrainingDetails(
     completion_date date,
     pass_or_fail bit not null,
     foreign key(employee_id) references Employees(employee_id),
+    foreign key(training_id) references Trainings(training_id),
     cascade on delete -- if the employee is deleted there is no reason to keep training record
 );
 
