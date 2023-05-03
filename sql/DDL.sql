@@ -113,7 +113,7 @@ CREATE OR REPLACE TABLE TrainingDetails(
     pass_or_fail bit not null,
     foreign key(employee_id) references Employees(employee_id),
     foreign key(training_id) references Trainings(training_id),
-    cascade on delete -- if the employee is deleted there is no reason to keep training record
+    cascade on delete -- if the employee or training is deleted there is no reason to keep training record
 );
 
 INSERT INTO TrainingDetails(training_id, title, duration_in_min, required_status)
