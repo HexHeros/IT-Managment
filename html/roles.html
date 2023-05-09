@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Heros IT Management</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Roles</h1>
+    <a href="home.html">Back</a>
+    <h4>New Role</h4>
+    <form title="new_role" method="post">
+        <label for="title">Role Title:</label>
+        <input type="text" id="title" name="title">
+        <label for="access_level">Access Level:</label>
+        <input type="number" id="access_level" name="access_level">
+        <input type="submit" value="Submit"><br>
+        <br>
+    </form>
+    <hr>
+    <table>
+        <tr>
+            <th>Role ID</th>
+            <th>Role Title</th>
+            <th>Manager</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Software Engineer</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Data Engineer</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Intern</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>CEO</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>CTO</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>CFO</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>IT</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Assistant to General Manager</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>General Manager</td>
+            <td>3</td>
+        </tr>
+    </table>
+</body>
+
+</html>
