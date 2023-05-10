@@ -17,7 +17,7 @@ CREATE OR REPLACE TABLE Employees (
     primary key(employee_id),
     foreign key(role_id) references Roles(role_id),
     foreign key(dept_id) references Departments(dept_id),
-    on delete set null  -- if departemnt or role are deleted we dont necessarily want to delete the employee
+    on delete set null  -- if department or role are deleted we dont necessarily want to delete the employee
 );
 
 --
