@@ -115,7 +115,7 @@ CREATE OR REPLACE TABLE Trainings(
     title nvarchar(255),
     duration_in_min int,
     required_status bit not null,
-    primary key(training_id),
+    primary key(training_id)
 );
 
 --
