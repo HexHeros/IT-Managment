@@ -20,6 +20,9 @@ SELECT * FROM Departments; -- select all Departments
 INSERT INTO Departments (dept_name, manager_employee_id)
 VALUES (:dept_nameInput, :manager_employee_id_from_dropdown_Input);
 
+UPDATE Departments SET manager_employee_id = :new_emp_id; -- Assign new manager
+
+UPDATE Departments SET manager_employee_id = NULL; -- Nullify the current manager
 -- Roles
 SELECT * FROM Roles; -- select all Roles
 
@@ -38,11 +41,15 @@ SELECT * FROM Trainings; -- select all Trainings
 INSERT INTO Trainings (title, duration_in_min, required_status)
 VALUES (:titleInput, :duration_in_minInput, :required_statusInput);
 
+DELETE FROM Trainings where training_id = :training_idInput -- This will cascade in the M:M relationship
+
 -- TrainingDetails
 SELECT * FROM TrainingDetails; -- select all TrainingDetails
 
 INSERT INTO TrainingDetails (employee_id, training_id, completion_date, pass_or_fail)
 VALUES (:employee_idInput, :training_idInput, :completion_dateInput, :pass_or_failInput)
+
+DELETE FROM TrainingDetails WHERE training_id = :training_idInput
 
 -- Passwords
 SELECT * FROM Passwords; -- select all Passwords
