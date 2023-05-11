@@ -24,11 +24,11 @@ CREATE OR REPLACE TABLE Employees (
 -- Dumping data for table `Employees`
 --
 
-INSERT INTO Employees(employee_id, first_name, last_name, email, dept_id, active, hire_date, role_id)
+INSERT INTO Employees(first_name, last_name, email, dept_id, active, hire_date, role_id)
 VALUES 
-(1, ‘Devri’, ‘Anderson’, ‘da@coder.com’, 1, 1, ‘2023-01-01’, 1),
-(2, ‘Jacob’, ‘Ogle’, ‘jo@coder.com’, 3, 1,’2023-01-02’,  2),
-(3, ‘Michael’, ‘Scott’, ‘prisonmike@coder.com’, 2, 1, ‘2023-04-29’, 9);
+('Devri', 'Anderson', 'da@coder.com', 1, 1, '2023-01-01', 1),
+('Jacob', 'Ogle', 'jo@coder.com', 3, 1, '2023-01-02',  2),
+('Michael', 'Scott', 'prisonmike@coder.com', 2, 1, '2023-04-29', 9);
 
 --
 -- Table structure for table `Devices`
@@ -42,19 +42,18 @@ CREATE OR REPLACE TABLE Devices(
     usb_access bit not null,
     primary key(device_id),
     employee_id int,
-    foreign key(employee_id) references Employees(employee_id),
-    on delete set null -- if employee is deleted we may want to keep device
+    foreign key(employee_id) references Employees(employee_id) on delete set null -- if employee is deleted we may want to keep device
 );
 
 --
 -- Dumping data for table `Devices`
 --
 
-INSERT INTO Devices(device_id, device_name, type, access_level, usb_access, employee_id)
+INSERT INTO Devices(device_name, type, access_level, usb_access, employee_id)
 VALUES
-(1, ‘Macbook Pro’, ‘Laptop’, 3, 0, 3),
-(2, ‘iPhone 14’, ’Mobile’, 1, 1, 2),
-(3, ‘iMac’, ‘Desktop’, 1, 1, 1);
+('Macbook Pro', 'Laptop', 3, 0, 3),
+('iPhone 14', 'Mobile', 1, 1, 2),
+('iMac', 'Desktop', 1, 1, 1);
 
 --
 -- Table structure for table `Departments`
@@ -65,19 +64,18 @@ CREATE OR REPLACE TABLE Departments(
     dept_name nvarchar(255),
     manager_employee_id int,
     primary key(dept_id),
-    foreign key(manager_employee_id) references Employees(employee_id),
-    on delete set null -- if employee is deleted we mw want to keep the dept
+    foreign key(manager_employee_id) references Employees(employee_id) on delete set null -- if employee is deleted we mw want to keep the dept
 );
 
 --
 -- Dumping data for table `Departments`
 --
 
-INSERT INTO Departments(dept_id, dept_name, manager_employee_id)
+INSERT INTO Departments(dept_name, manager_employee_id)
 VALUES
-(1, ‘Software Engineering’, 1),
-(2, ‘Management’, 3),
-(3, ‘Data Analytics’, 2);
+('Software Engineering', 1),
+('Management', 3),
+('Data Analytics', 2);
 
 --
 -- Table structure for table `Roles`
@@ -94,17 +92,17 @@ CREATE OR REPLACE TABLE Roles(
 -- Dumping data for table `Roles`
 --
 
-INSERT INTO Roles(role_id, title, access_level)
+INSERT INTO Roles(title, access_level)
 VALUES
-(1, ‘Software Engineer’, 1),
-(2, ‘Data Engineer’, 1),
-(3, ‘Intern’, 10),
-(4, ‘CEO’, 1),
-(5, ‘CTO’, 1),
-(6, ‘CFO’, 1),
-(7, ‘IT’, 1),
-(8, ‘Assistant to General Manager’, 6),
-(9, ‘General Manager’, 3);
+('Software Engineer', 1),
+('Data Engineer', 1),
+('Intern', 10),
+('CEO', 1),
+('CTO', 1),
+('CFO', 1),
+('IT', 1),
+('Assistant to General Manager', 6),
+('General Manager', 3);
 
 --
 -- Table structure for table `Trainings`
@@ -122,11 +120,11 @@ CREATE OR REPLACE TABLE Trainings(
 -- Dumping data for table `Trainings`
 --
 
-INSERT INTO Trainings(training_id, title, duration_in_min, required_status)
+INSERT INTO Trainings(title, duration_in_min, required_status)
 VALUES
-(1, ‘SQL Certification’, 120, 1),
-(2, ‘Reverse Running in Red Rock’, 10, 0),
-(3, ‘Don’t get hacked 101’, 60, 0);
+('SQL Certification', 120, 1),
+('Reverse Running in Red Rock', 10, 0),
+('Don’t get hacked 101', 60, 0);
 
 --
 -- Table structure for table `Passwords`
@@ -138,19 +136,18 @@ CREATE OR REPLACE TABLE Passwords(
     req_change bit not null,
     employee_id int,
     primary key(password_id),
-    foreign key(employee_id) references Employees(employee_id),
-    on delete cascade -- if employee is deleted no reason to keep password
+    foreign key(employee_id) references Employees(employee_id) on delete cascade -- if employee is deleted no reason to keep password
 );
 
 --
 -- Dumping data for table `Passwords`
 --
 
-INSERT INTO Passwords(password_id, password, req_change, employee_id)
+INSERT INTO Passwords(password, req_change, employee_id)
 VALUES
-(1, ‘abc123*!’, 0, 1),
-(2, ‘password’, 0, 2),
-(3, ‘DunderMifflin1’, 1, 3);
+('abc123*!', 0, 1),
+('password', 0, 2),
+('DunderMifflin1', 1, 3);
 
 --
 -- Table structure for table `TrainingDetails`
@@ -162,25 +159,20 @@ CREATE OR REPLACE TABLE TrainingDetails(
     training_id int,
     completion_date date,
     pass_or_fail bit not null,
+    primary key(training_details_id),
     foreign key(employee_id) references Employees(employee_id),
-    foreign key(training_id) references Trainings(training_id),
-    on delete cascade -- if the employee is deleted there is no reason to keep training record
+    foreign key(training_id) references Trainings(training_id) on delete cascade -- if the employee is deleted there is no reason to keep training record
 );
 
 --
 -- Dumping data for table `TrainingDetails`
 --
 
-INSERT INTO TrainingDetails(training_details_id, employee_id, training_id, completion_date, pass_or_fail)
+INSERT INTO TrainingDetails(employee_id, training_id, completion_date, pass_or_fail)
 VALUES
-(1, 2, 1, ‘2023-05-01’, 1),
-(2, 3, 3, ‘2023-01-05’, 1),
-(3, 1, 2, ‘2023-06-01’, 1);
+(2, 1, '2023-05-01', 1),
+(3, 3, '2023-01-05', 1),
+(1, 2, '2023-06-01', 1);
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
-
-
-
-
-
