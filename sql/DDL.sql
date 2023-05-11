@@ -121,7 +121,7 @@ INSERT INTO Trainings(title, duration_in_min, required_status)
 VALUES
 ('SQL Certification', 120, 1),
 ('Reverse Running in Red Rock', 10, 0),
-('Don’t get hacked 101', 60, 0);
+('Don’t Get Hacked 101', 60, 0);
 
 --
 -- Table structure for table `Passwords`
