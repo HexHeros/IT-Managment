@@ -13,11 +13,8 @@ CREATE OR REPLACE TABLE Employees (
     dept_id int not null,
     active bit not null,
     hire_date date,
-    role_id int,
-    primary key(employee_id),
-    foreign key(role_id) references Roles(role_id),
-    foreign key(dept_id) references Departments(dept_id),
-    on delete set null  -- if department or role are deleted we dont necessarily want to delete the employee
+    role_id int not null,
+    primary key(employee_id)
 );
 
 --
