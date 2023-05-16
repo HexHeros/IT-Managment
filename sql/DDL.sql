@@ -154,7 +154,7 @@ CREATE OR REPLACE TABLE TrainingDetails(
     training_details_id int not null auto_increment,
     employee_id int,
     training_id int,
-    completion_date date,
+    completion_date date not null,
     pass_or_fail bit not null,
     primary key(training_details_id),
     foreign key(employee_id) references Employees(employee_id),
