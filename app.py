@@ -50,7 +50,7 @@ def new_employee():
         hire_date = request.form["hire_date"]
         role_id = int(request.form["role_id"])
         query = "INSERT INTO Employees( first_name, last_name, email, dept_id, active, hire_date, role_id )\n"
-        vals = f"values ('{fn}', '{ln}', '{email}', {dept_id}, {active}, '{hire_date}', {role_id})" 
+        vals = f"values ('{fn}', '{ln}', '{email}', {dept_id}, {active}, '{hire_date}', {role_id})"
         cursor = db.execute_query(db_connection=db_connection, query=(query+vals))
         return redirect(url_for('employees'))
     return render_template("new_employee.html")
@@ -78,6 +78,14 @@ def edit_employee(id):
         cursor = db.execute_query(db_connection=db_connection, query=query)
         result = cursor.fetchall()
         return render_template("edit_employee.html", employees=result)
+
+@app.route("/delete_employee/<int:id>")
+def delete_people(id):
+    # mySQL query to delete the person with our passed id
+    query = f"DELETE FROM Employees WHERE employee_id = {id};"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    # redirect back to people page
+    return redirect(url_for('employees'))
 
 @app.route('/roles')
 def roles():
