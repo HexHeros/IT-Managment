@@ -1,3 +1,4 @@
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,9 +24,9 @@
 <body>
     <h1>Employees</h1>
     <p>Welcome to the Employees page. You can view a list of existing employees within your organization and add new employees as needed.</p>
-    <a href="home.html">Back</a>
+    <a href="/">Back</a>
     <br>
-    <a href="new_employee.html">Add New Employee</a>
+    <a href="/new_employee">Add New Employee</a>
     <hr>
 
     <table>
@@ -41,44 +42,23 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
+        {% for employee in employees %}
         <tr>
-            <td>1</td>
-            <td>Devri</td>
-            <td>Anderson</td>
-            <td>da@coder.com</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1/1/2023</td>
-            <td><a href="#">Edit</td>
+            <th>{{ employee.employee_id }}</th>
+            <th>{{ employee.first_name }}</th>
+            <th>{{ employee.last_name }}</th>
+            <th>{{ employee.email }}</th>
+            <th>{{ employee.dept_id }}</th>
+            <th>{{ employee.role_id }}</th>
+            <th>{{ employee.active }}</th>
+            <th>{{ employee.hire_date }}</th>
+            <td><a href="/edit_employee/{{ employee.employee_id }}">Edit</td>
             <td><a href="#">Delete</td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Ogle</td>
-            <td>jo@coder.com</td>
-            <td>3</td>
-            <td>1</td>
-            <td>2</td>
-            <td>1/2/2023</td>
-            <td><a href="#">Edit</td>
-            <td><a href="#">Delete</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Michael</td>
-            <td>Scott</td>
-            <td>prisonmike@coder.com</td>
-            <td>1</td>
-            <td>9</td>
-            <td>1</td>
-            <td>4/29/2023</td>
-            <td><a href="#">Edit</td>
-            <td><a href="#">Delete</td>
-        </tr>
+        {% endfor %}
     </table>
 
 </body>
 
 </html>
+{% endblock %}

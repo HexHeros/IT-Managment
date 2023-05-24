@@ -12,34 +12,35 @@
     <h1>New Employees Creation Portal</h1>
     <p>This section allows you to add a new employee to the Hex Heros IT Management system.</p>
     <br>
-    <a href="home.html">Back</a>
+    <a href="/">Back</a>
     <br>
     <hr>
     <!-- CRUD Ops ALL -->
-    <form>
+    <form action="/new_employee" method="POST">
         <label for="first_name">First name:</label><br>
         <input type="text" id="first_name" name="first_name"><br>
         <label for="last_name">Last name:</label><br>
         <input type="text" id="last_name" name="last_name"><br>
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email"><br>
-        <label for="department">Choose a Department:</label><br>
-        <select id="department" name="department"><br>
-            <option value="SWE">Software Engineering</option>
-            <option value="Management">Management</option>
-            <option value="DataAnalytics">Data Analytics</option>
+        <label for="dept_id">Choose a Department:</label><br>
+        <select id="dept_id" name="dept_id"><br>
+            <option value="1">Software Engineering</option>
+            <option value="2">Management</option>
+            <option value="3">Data Analytics</option>
         </select><br>
-        <label for="role">Choose a Role:</label><br>
-        <select id="department" name="department"><br>
-            <option value="SWE">Software Engineer</option>
-            <option value="DataEng">Data Engineer</option>
-            <option value="Intern">Intern</option>
-            <option value="CEO">CEO</option>
-            <option value="CTO">CTO</option>
-            <option value="CFO">CFO</option>
-            <option value="IT">IT</option>
-            <option value="AGM">Assistant to General Manager</option>
-            <option value="GM">General Manager</option>
+        <label for="role_id">Choose a Role:</label><br>
+        <select id="role_id" name="role_id"><br>
+            <option value="0">Software Engineer</option>
+            <option value="1">Data Engineer</option>
+            <option value="2">Intern</option>
+            <option value="3">CEO</option>
+            <option value="4">CTO</option>
+            <option value="4">CTO</option>
+            <option value="5">CFO</option>
+            <option value="6">IT</option>
+            <option value="7">Assistant to General Manager</option>
+            <option value="8">General Manager</option>
         </select><br>
         <label for="active">Active:</label>
         <input type="checkbox" id="active" name="active"><br>

@@ -11,6 +11,12 @@ user = os.environ.get("340DBUSER")
 passwd = os.environ.get("340DBPW")
 db = os.environ.get("340DB")
 
+# Hardcoded
+host = 'classmysql.engr.oregonstate.edu'      # MUST BE THIS
+user = 'cs340_ogleja'       # don't forget the cs340_ prefix
+passwd = '9706'               # should only be 4 digits if default
+db = 'cs340_ogleja'                                  
+
 def connect_to_database(host = host, user = user, passwd = passwd, db = db):
     '''
     connects to a database and returns a database objects
