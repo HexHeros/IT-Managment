@@ -11,6 +11,7 @@
             border-collapse: collapse;
             width: 100%;
         }
+
         table,
         th,
         td {
@@ -29,9 +30,8 @@
     <hr>
 
     <div>
-        <form action="/edit_employee/{{ employees.employee_id }}" method="POST">
-    
-            <input type="number" id="employee_id" name="employee_id" value="{{ employees.employee_id }}"><br>
+        <form action="/edit_employee/{{ employees[0].employee_id }}" method="POST">
+            <input type="hidden" id="employee_id" name="employee_id" value="{{ employees[0].employee_id }}"><br>
             <label for="first_name">First name:</label><br>
             <input type="text" id="first_name" name="first_name"><br>
             <label for="last_name">Last name:</label><br>
