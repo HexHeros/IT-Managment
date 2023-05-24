@@ -55,7 +55,7 @@
             <th>{{ employee.active }}</th>
             <th>{{ employee.hire_date }}</th>
             <td><a href="/edit_employee/{{ employee.employee_id }}">Edit</td>
-            <td><a href="#">Delete</td>
+            <td><a href="/delete_employee/{{ employee.employee_id }}">Delete</td>
         </tr>
         {% endfor %}
     </table>
