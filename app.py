@@ -64,8 +64,9 @@ def edit_employee(id):
         email = request.form['email']
         dept_id = int(request.form['dept_id'])
         active = 1 if request.form["active"] == 'on' else 0
+        hire_date = request.form["hire_date"]
         role_id = int(request.form["role_id"])
-        query = f"UPDATE Employees SET first_name = '{fn}', last_name = '{ln}', email = '{email}', dept_id = {dept_id}, active = {active}, role_id = {role_id} WHERE employee_id = {eid}"
+        query = f"UPDATE Employees SET first_name = '{fn}', last_name = '{ln}', email = '{email}', dept_id = {dept_id}, active = {active}, hire_date = {hire_date}, role_id = {role_id} WHERE employee_id = {eid}"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         return redirect(url_for('employees'))
     if request.method == "GET":
