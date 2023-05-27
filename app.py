@@ -7,14 +7,13 @@ from flask import Flask, render_template, json, request, redirect, url_for
 from flask_mysqldb import MySQL
 import os
 
-# Configuration
+# database connection info
 app = Flask(__name__)
-app.config['DEBUG']             = True
-app.config['MYSQL_HOST']        = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER']        = 'cs340_ogleja'
-app.config['MYSQL_PASSWORD']    = '9706' #last 4 of onid
-app.config['MYSQL_DB']          = 'cs340_ogleja'
-app.config['MYSQL_CURSORCLASS'] = "DictCursor"
+app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
+app.config["MYSQL_USER"] = "cs340_anderdev"
+app.config["MYSQL_PASSWORD"] = "6643"
+app.config["MYSQL_DB"] = "cs340_anderdev"
+app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
 
@@ -41,10 +40,61 @@ def departments():
     """
     Renders the departments page
     """
-    # query = ""
-    # cursor = db.execute_query(db_connection=db_connection, query=query)
-    # results = cursor.fetchall()
-    return render_template("departments.html")
+    cur = mysql.connection.cursor()
+    if request.method == "GET":
+        # Retrieve all departments in the database
+        query = "select * from Departments;"
+        cur.execute(query)
+        results = cur.fetchall()
+    return render_template("departments.html", departments=results)
+
+@app.route('/new_department', methods=["GET", "POST"])
+def new_department():
+    """
+    Handles the creation of a new department.
+    
+    POST - handle the form submission for creating a new department
+    """
+    cur = mysql.connection.cursor()
+    if request.method == "POST":
+        dept_name = request.form["dept_name"]
+        manager_id = request.form['manager_employee_id']
+        query = "INSERT INTO Departments( dept_name, manager_employee_id )\n"
+        vals = f"VALUES ('{dept_name}', '{manager_id}')"
+        cur.execute(query+vals)
+        mysql.connection.commit()
+        return redirect(url_for('departments'))
+    else:
+        query = "SELECT manager_employee_id FROM Departments"
+        cur.execute(query)
+        managers = cur.fetchall()
+        
+        query = f"SELECT DISTINCT d.manager_employee_id, e.first_name, e.last_name FROM Departments d INNER JOIN Employees e ON d.manager_employee_id = e.employee_id"
+        cur.execute(query)
+        managers = cur.fetchall()
+    return render_template("new_department.html", managers=managers)
+
+@app.route('/edit_department/<int:dept_id>', methods=['GET', 'POST'])
+def edit_department(dept_id):
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        dept_name = request.form['dept_name']
+        manager_id = request.form['manager_employee_id']
+        query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = '{manager_id}' WHERE dept_id = {dept_id}"
+        cur.execute(query)
+        mysql.connection.commit()
+        return redirect(url_for('departments')) 
+    if request.method == 'GET':
+        # Render the form for editing a department
+        query = f"SELECT * from Departments WHERE dept_id={dept_id}"
+        cur.execute(query)
+        departments = cur.fetchall()
+        
+        # fetch the department details
+        query = f"SELECT DISTINCT d.manager_employee_id, e.first_name, e.last_name FROM Departments d INNER JOIN Employees e ON d.manager_employee_id = e.employee_id"
+        cur.execute(query)
+        managers = cur.fetchall()
+        return render_template("edit_department.html", departments=departments, managers=managers)
 
 @app.route('/devices')
 def devices():
@@ -151,5 +201,5 @@ def passwords():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9113))
+    port = int(os.environ.get('PORT', 11328))
     app.run(port=port, debug=True)
