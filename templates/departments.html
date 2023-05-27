@@ -23,18 +23,11 @@
 
 <body>
     <h1>Departments</h1>
-    <a href="/">Back</a>
     <p>Welcome to the Departments page. This section allows you to manage and organize the departments within your organization.</p>
-    <h4>New Department</h4>
-    <p>Add a new department</p>
-    <form title="new_department" method="post">
-        <label for="name">Department Name:</label>
-        <input type="text" id="name" name="name">
-        <label for="mangaer_id">Manager:</label>
-        <input type="number" id="mangaer_id" name="mangaer_id">
-        <input type="submit" value="Submit"><br>
-        <br>
-    </form>
+    <a href="/">Back</a>
+    <br>
+    <a href="/new_department">Add New Department</a>
+    <br>
     <hr>
     <table>
         <tr>
@@ -42,24 +35,14 @@
             <th>Department Name</th>
             <th>Manager</th>
         </tr>
+        {% for department in departments %}
         <tr>
-            <td>1</td>
-            <td>Software Engineering</td>
-            <td>1</td>
-            <td><a href="#">Edit</td>
+            <th>{{ department.dept_id }}</th>
+            <th>{{ department.dept_name }}</th>
+            <th>{{ department.manager_employee_id }}</th>
+            <td><a href="/edit_department/{{ department.dept_id }}">Edit</td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Management</td>
-            <td>3</td>
-            <td><a href="#">Edit</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Data Analytics</td>
-            <td>2</td>
-            <td><a href="#">Edit</td>
-        </tr>
+        {% endfor %}
     </table>
 </body>
 
