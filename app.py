@@ -30,7 +30,7 @@ def employees():
     cur = mysql.connection.cursor()
     if request.method == "GET":
         # Retrieve all employees in the database
-        query = "select * from Employees;"
+        query = "SELECT * from Employees;"
         cur.execute(query)
         results = cur.fetchall()
     return render_template("employees.html", employees=results)
@@ -43,7 +43,7 @@ def departments():
     cur = mysql.connection.cursor()
     if request.method == "GET":
         # Retrieve all departments in the database
-        query = "select * from Departments;"
+        query = "SELECT * from Departments"
         cur.execute(query)
         results = cur.fetchall()
     return render_template("departments.html", departments=results)
@@ -154,10 +154,10 @@ def edit_employee(id):
         return redirect(url_for('employees'))
     if request.method == "GET":
         # Render the form for editing an employee
-        query = f"select * from Employees where employee_id={id};"
+        query = f"SELECT * from Employees WHERE employee_id={id};"
         cur.execute(query)
-        results = cur.fetchall()
-        return render_template("edit_employee.html", employees=results)
+        employees = cur.fetchall()
+        return render_template("edit_employee.html", employees=employees)
     else:
         # Fetch the employee data for displaying in the edit area
         query = f"SELECT * FROM Employees WHERE employee_id = %s"
@@ -183,7 +183,39 @@ def roles():
     # query = ""
     # cursor = db.execute_query(db_connection=db_connection, query=query)
     # results = cursor.fetchall()
-    return render_template("roles.html")
+    cur = mysql.connection.cursor()
+    if request.method == "GET":
+        query = "SELECT * FROM Roles"
+        cur.execute(query)
+        roles=cur.fetchall()
+    return render_template("roles.html", roles=roles)
+
+@app.route('/new_role', methods=['GET', 'POST'])
+def new_role():
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        title = request.form['title']
+        access_level = request.form['access_level']
+        query = "INSERT INTO Roles( title, access_level )\n"
+        vals = f"values ('{title}', '{access_level}')"
+        cur.execute(query+vals)
+        mysql.connection.commit()
+        return redirect(url_for('roles'))
+    
+    return render_template("new_role.html")
+
+@app.route("/delete_role/<int:id>")
+def delete_role(id):
+    """
+    Route to handle deletion the person with the passed id.
+    """
+    cur = mysql.connection.cursor()
+    # mySQL query to delete the person with our passed id
+    query = f"DELETE FROM Roles WHERE role_id = %s;"
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # redirect back to people page
+    return redirect(url_for('roles'))
 
 @app.route('/trainings')
 def trainings():
