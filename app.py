@@ -9,11 +9,12 @@ import os
 
 # database connection info
 app = Flask(__name__)
-app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-app.config["MYSQL_USER"] = "cs340_anderdev"
-app.config["MYSQL_PASSWORD"] = "6643"
-app.config["MYSQL_DB"] = "cs340_anderdev"
-app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+app.config['DEBUG']             = True
+app.config['MYSQL_HOST']        = 'classmysql.engr.oregonstate.edu'
+app.config['MYSQL_USER']        = 'cs340_ogleja'
+app.config['MYSQL_PASSWORD']    = '9706' #last 4 of onid
+app.config['MYSQL_DB']          = 'cs340_ogleja'
+app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 mysql = MySQL(app)
 
