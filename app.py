@@ -32,79 +32,8 @@ def employees():
         # Retrieve all employees in the database
         query = "SELECT * from Employees;"
         cur.execute(query)
-        results = cur.fetchall()
-    return render_template("employees.html", employees=results)
-
-@app.route('/departments')
-def departments():
-    """
-    Renders the departments page
-    """
-    cur = mysql.connection.cursor()
-    if request.method == "GET":
-        # Retrieve all departments in the database
-        query = "SELECT * from Departments"
-        cur.execute(query)
-        results = cur.fetchall()
-    return render_template("departments.html", departments=results)
-
-@app.route('/new_department', methods=["GET", "POST"])
-def new_department():
-    """
-    Handles the creation of a new department.
-    
-    POST - handle the form submission for creating a new department
-    """
-    cur = mysql.connection.cursor()
-    if request.method == "POST":
-        dept_name = request.form["dept_name"]
-        manager_id = request.form['manager_employee_id']
-        query = "INSERT INTO Departments( dept_name, manager_employee_id )\n"
-        vals = f"VALUES ('{dept_name}', '{manager_id}')"
-        cur.execute(query+vals)
-        mysql.connection.commit()
-        return redirect(url_for('departments'))
-    else:
-        query = "SELECT manager_employee_id FROM Departments"
-        cur.execute(query)
-        managers = cur.fetchall()
-        
-        query = f"SELECT DISTINCT d.manager_employee_id, e.first_name, e.last_name FROM Departments d INNER JOIN Employees e ON d.manager_employee_id = e.employee_id"
-        cur.execute(query)
-        managers = cur.fetchall()
-    return render_template("new_department.html", managers=managers)
-
-@app.route('/edit_department/<int:dept_id>', methods=['GET', 'POST'])
-def edit_department(dept_id):
-    cur = mysql.connection.cursor()
-    if request.method == 'POST':
-        dept_name = request.form['dept_name']
-        manager_id = request.form['manager_employee_id']
-        query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = '{manager_id}' WHERE dept_id = {dept_id}"
-        cur.execute(query)
-        mysql.connection.commit()
-        return redirect(url_for('departments')) 
-    if request.method == 'GET':
-        # Render the form for editing a department
-        query = f"SELECT * from Departments WHERE dept_id={dept_id}"
-        cur.execute(query)
-        departments = cur.fetchall()
-        
-        # fetch the department details
-        query = f"SELECT DISTINCT d.manager_employee_id, e.first_name, e.last_name FROM Departments d INNER JOIN Employees e ON d.manager_employee_id = e.employee_id"
-        cur.execute(query)
-        managers = cur.fetchall()
-        return render_template("edit_department.html", departments=departments, managers=managers)
-
-@app.route('/devices')
-def devices():
-    """
-    Renders the devices page
-    """
-    # query = ""
-    # cursor = db.execute_query(db_connection=db_connection, query=query)
-    # results = cursor.fetchall()
-    return render_template("devices.html")
+        employees = cur.fetchall()
+    return render_template("employees.html", employees=employees)
 
 @app.route('/new_employee', methods=["GET", "POST"])
 def new_employee():
@@ -178,6 +107,100 @@ def delete_people(id):
     # redirect back to people page
     return redirect(url_for('employees'))
 
+@app.route('/departments')
+def departments():
+    """
+    Renders the departments page
+    """
+    cur = mysql.connection.cursor()
+    if request.method == "GET":
+        # Retrieve all departments in the database
+        query = "SELECT * from Departments"
+        cur.execute(query)
+        departments = cur.fetchall()
+    return render_template("departments.html", departments=departments)
+
+@app.route('/new_department', methods=["GET", "POST"])
+def new_department():
+    """
+    Handles the creation of a new department.
+    
+    POST - handle the form submission for creating a new department
+    """
+    cur = mysql.connection.cursor()
+    if request.method == "POST":
+        dept_name = request.form["dept_name"]
+        manager_id = request.form['manager_employee_id']
+        query = "INSERT INTO Departments( dept_name, manager_employee_id )\n"
+        vals = f"VALUES ('{dept_name}', '{manager_id}')"
+        cur.execute(query+vals)
+        mysql.connection.commit()
+        return redirect(url_for('departments'))
+    else:
+        query = "SELECT manager_employee_id FROM Departments"
+        cur.execute(query)
+        managers = cur.fetchall()
+        
+        query = f"SELECT DISTINCT d.manager_employee_id, e.first_name, e.last_name FROM Departments d INNER JOIN Employees e ON d.manager_employee_id = e.employee_id"
+        cur.execute(query)
+        managers = cur.fetchall()
+    return render_template("new_department.html", managers=managers)
+
+@app.route('/edit_department/<int:dept_id>', methods=['GET', 'POST'])
+def edit_department(dept_id):
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        dept_name = request.form['dept_name']
+        manager_id = request.form['manager_employee_id']
+        query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = '{manager_id}' WHERE dept_id = {dept_id}"
+        cur.execute(query)
+        mysql.connection.commit()
+        return redirect(url_for('departments')) 
+    if request.method == 'GET':
+        # Render the form for editing a department
+        query = f"SELECT * from Departments WHERE dept_id={dept_id}"
+        cur.execute(query)
+        departments = cur.fetchall()
+        
+        # fetch the department details
+        query = f"SELECT DISTINCT d.manager_employee_id, e.first_name, e.last_name FROM Departments d INNER JOIN Employees e ON d.manager_employee_id = e.employee_id"
+        cur.execute(query)
+        managers = cur.fetchall()
+        return render_template("edit_department.html", departments=departments, managers=managers)
+
+@app.route('/devices')
+def devices():
+    """
+    Renders the devices page
+    """
+    # query = ""
+    # cursor = db.execute_query(db_connection=db_connection, query=query)
+    # results = cursor.fetchall()
+    cur = mysql.connection.cursor()
+    if request.method == "GET":
+        # Retrieve all departments in the database
+        query = "SELECT * from Devices"
+        cur.execute(query)
+        devices = cur.fetchall()
+    return render_template("devices.html", devices=devices)
+
+@app.route('/new_device', methods=['GET', 'POST'])
+def new_device():
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        device_name = request.form['device_name']
+        type = request.form['device_type']
+        access_level = int(request.form['access_level'])
+        usb_access = request.form['usb_access']
+        employee_id = int(request.form['employee_id'])
+        query = "INSERT INTO Devices( device_name, type, access_level, usb_access, employee_id )\n"
+        vals = f"values ('{device_name}', '{type}', {access_level}, '{usb_access}', {employee_id})"
+        cur.execute(query+vals)
+        mysql.connection.commit()
+        return redirect(url_for('devices'))
+    
+    return render_template("new_device.html")
+
 @app.route('/roles')
 def roles():
     # query = ""
@@ -207,7 +230,7 @@ def new_role():
 @app.route("/delete_role/<int:id>")
 def delete_role(id):
     """
-    Route to handle deletion the person with the passed id.
+    Route to handle deleting a role with the passed id.
     """
     cur = mysql.connection.cursor()
     # mySQL query to delete the person with our passed id
