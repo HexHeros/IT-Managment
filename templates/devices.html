@@ -30,13 +30,22 @@
     <table>
         <thead>
             <tr>
-                <th>Device Id</th>
                 <th>Device Name</th>
-                <th>Type</th>
+                <th>Device Type</th>
                 <th>Access Level</th>
                 <th>USB Access</th>
                 <th>Employee ID</th>
             </tr>
+            {% for device in devices %}
+            <tr>
+            <th>{{ device.device_name }}</th>
+            <th>{{ device.type }}</th>
+            <th>{{ device.access_level }}</th>
+            <th>{{ device.usb_access }}</th>
+            <th>{{ device.employee_id }}</th>
+            </tr>
+        {% endfor %}
+    </table>
         </thead>
     </table>   
 </body>
