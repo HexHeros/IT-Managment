@@ -1,0 +1,66 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="./static/css/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Delete Employee</h1>
+    <p>Are you sure you want to delete the following employee?</p>
+    <a href="/">Back</a>
+    <br>
+    <hr>
+
+    <table>
+        <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Department ID</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Hire Date</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for employee in employees %}
+        <tr>
+            <th>{{ employee.employee_id }}</th>
+            <th>{{ employee.first_name }}</th>
+            <th>{{ employee.last_name }}</th>
+            <th>{{ employee.email }}</th>
+            <th>{{ employee.dept_id }}</th>
+            <th>{{ employee.role_id }}</th>
+            <th>{{ employee.active }}</th>
+            <th>{{ employee.hire_date }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <form action="/delete_employee/{{ employee.employee_id }}" method="post">
+        <input type="submit" value="Confirm Delete">
+    </form>
+    <a href="/employees">Cancel</a>
+</body>
+
+</html>
+{% endblock %}
