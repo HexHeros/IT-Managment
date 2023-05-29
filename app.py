@@ -107,6 +107,16 @@ def delete_people(id):
     # redirect back to people page
     return redirect(url_for('employees'))
 
+@app.route("/confirm_delete/<int:employee_id>", methods=["GET"])
+def confirm_delete(employee_id):
+    cur = mysql.connection.cursor()
+    query = f"SELECT * FROM Employees WHERE employee_id = %s;"
+    cur.execute(query, (employee_id,))
+    mysql.connection.commit()
+    employee = cur.fetchone()
+    print(employee)
+    return render_template("confirm_delete.html", employee=employee)
+
 @app.route('/departments')
 def departments():
     """
