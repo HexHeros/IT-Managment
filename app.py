@@ -189,7 +189,7 @@ def new_device():
     cur = mysql.connection.cursor()
     if request.method == 'POST':
         device_name = request.form['device_name']
-        type = request.form['device_type']
+        type = request.form['type']
         access_level = int(request.form['access_level'])
         usb_access = request.form['usb_access']
         employee_id = int(request.form['employee_id'])
