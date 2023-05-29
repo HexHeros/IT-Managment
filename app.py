@@ -267,5 +267,5 @@ def passwords():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 11328))
+    port = int(os.environ.get('PORT', 9706))
     app.run(port=port, debug=True)
