@@ -316,7 +316,7 @@ def delete_training_log(id):
     """
     cur = mysql.connection.cursor()
     # mySQL query to delete the person with our passed id
-    query = f"DELETE FROM TrainingDetails WHERE training_id = %s;"
+    query = f"DELETE FROM TrainingDetails WHERE training_details_id = %s;"
     cur.execute(query, (id,))
     mysql.connection.commit()
     # redirect back to people page
