@@ -102,7 +102,7 @@ def delete_people(id):
     """
     cur = mysql.connection.cursor()
     # mySQL query to delete the person with our passed id
-    query = f"DELETE FROM Employees WHERE employee_id = %s;"
+    query = "DELETE FROM Employees WHERE employee_id = %s;"
     cur.execute(query, (id,))
     mysql.connection.commit()
     # redirect back to people page
@@ -214,9 +214,6 @@ def new_device():
 
 @app.route('/roles')
 def roles():
-    # query = ""
-    # cursor = db.execute_query(db_connection=db_connection, query=query)
-    # results = cursor.fetchall()
     cur = mysql.connection.cursor()
     if request.method == "GET":
         query = "SELECT * FROM Roles"
@@ -251,21 +248,104 @@ def delete_role(id):
     # redirect back to people page
     return redirect(url_for('roles'))
 
-@app.route('/trainings')
+@app.route('/trainings', methods=['GET', 'POST'])
 def trainings():
-    # query = ""
-    # cursor = db.execute_query(db_connection=db_connection, query=query)
-    # results = cursor.fetchall()
-    return render_template("trainings.html")
+    """
+    Route to handle both the display of all training + training details
+    Also allows users to create new training + training details or 
+    delete existing.
+    """
+    
+    if request.method == 'GET':
+        
+        # Grab all trainings
+        cur = mysql.connection.cursor()  
+        query = "SELECT * FROM Trainings;"
+        cur.execute(query)
+        trainings_res = cur.fetchall()
+        
+        # Grab all training logs
+        query = "SELECT * FROM TrainingDetails;"
+        cur.execute(query)
+        training_deatils_res = cur.fetchall()
+        return render_template("trainings.html", trainings=trainings_res, training_details=training_deatils_res)
+    
+    if request.method == 'POST':
+        
+        # check if coming from trainings or training log
+        if request.form['form_type'] == "new_train":
+            cur = mysql.connection.cursor()
+            title = request.form['title']
+            duration_in_min = request.form['duration_in_min']
+            required_status = request.form['required_status']
+            query = "INSERT INTO Trainings (title, duration_in_min, required_status)"
+            vals = f"VALUES ('{title}', {duration_in_min}, {required_status});"
+            cur.execute(query+vals)
+            mysql.connection.commit()
+        
+        if request.form['form_type'] == "new_train_log":
+            cur = mysql.connection.cursor()
+            employee_id = request.form['employee_id']
+            training_id = request.form['training_id']
+            completion_date = request.form['completion_date']
+            pass_or_fail = request.form['pass_or_fail']
+            query = "INSERT INTO TrainingDetails (employee_id, training_id, completion_date, pass_or_fail)"
+            vals = f"VALUES ({employee_id}, {training_id}, '{completion_date}', {pass_or_fail})"
+            cur.execute(query+vals)
+            mysql.connection.commit()
+        
+        return redirect(url_for('trainings'))
+
+@app.route("/delete_training/<int:id>")
+def delete_training(id):
+    """
+    Route to handle deleting a training item with the passed id.
+    """
+    cur = mysql.connection.cursor()
+    # mySQL query to delete the person with our passed id
+    query = f"DELETE FROM Trainings where training_id = %s;"
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # redirect back to people page
+    return redirect(url_for('trainings'))
+
+@app.route("/delete_training_log/<int:id>")
+def delete_training_log(id):
+    """
+    Route to handle deleting a training log with the passed id.
+    """
+    cur = mysql.connection.cursor()
+    # mySQL query to delete the person with our passed id
+    query = f"DELETE FROM TrainingDetails WHERE training_id = %s;"
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # redirect back to people page
+    return redirect(url_for('trainings'))
+
 
 @app.route('/passwords')
 def passwords():
-    # query = ""
-    # cursor = db.execute_query(db_connection=db_connection, query=query)
-    # results = cursor.fetchall()
-    return render_template("passwords.html")
+    cur = mysql.connection.cursor()
+    if request.method == "GET":
+        query = "SELECT * FROM Passwords;"
+        cur.execute(query)
+        passwords=cur.fetchall()
+    return render_template("passwords.html" , passwords=passwords)
+
+@app.route("/delete_password/<int:id>")
+def delete_password(id):
+    """
+    Route to handle deleting a training item with the passed id.
+    """
+    cur = mysql.connection.cursor()
+    # mySQL query to delete the person with our passed id
+    query = f"DELETE FROM Passwords where password_id = %s;"
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # redirect back to people page
+    return redirect(url_for('passwords'))
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9706))
+    port = int(os.environ.get('PORT', 9707))
     app.run(port=port, debug=True)
