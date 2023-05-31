@@ -1,0 +1,93 @@
+/*
+# This file uses a pre-made button
+# Date: 5/30/2023
+# Copied from:
+# Source URL: https://getcssscan.com/css-buttons-examples
+*/
+
+body {
+    font-family: Montserrat, Helvetica, Arial, sans-serif;
+    background-color: #faefef;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #e70b0b;
+    text-align: center;
+    background-color: #fff;
+    border-bottom: 1pc solid #ddd;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid;
+}
+
+.button-1 {
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #F082AC;
+}
+
+th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #f2f2f2;
+}
+
+tr {
+    border: 1px solid #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #e6e6e6;
+}
+
+td a {
+    color: #007bff;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
