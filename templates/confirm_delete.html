@@ -44,3 +44,17 @@
 </body>
 
 </html>
+# Create the TrainingDetails table
+cur.execute("""
+    CREATE TABLE TrainingDetails (
+        training_id INT AUTO_INCREMENT PRIMARY KEY,
+        employee_id INT,
+        training_name VARCHAR(255),
+        training_date DATE,
+        training_duration INT,
+        CONSTRAINT fk_employee
+            FOREIGN KEY (employee_id)
+            REFERENCES Employees (employee_id)
+            ON DELETE CASCADE
+    )
+""")
