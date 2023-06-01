@@ -32,6 +32,7 @@
             <th>Role ID</th>
             <th>Role Title</th>
             <th>Access Level</th>
+            <th>Edit</th>
             <th>Delete</th>
         </tr>
         {% for role in roles %}
@@ -39,7 +40,8 @@
             <th>{{ role.role_id }}</th>
             <th>{{ role.title }}</th>
             <th>{{ role.access_level }}</th>
-            <td><a href="/delete_role/{{ role.role_id }}"><i class="fas fa-trash-alt"></i></td>
+            <td><a href="/edit_role/{{ role.role_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></a></td>
+            <td><a href="/delete_role/{{ role.role_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
         </tr>
         {% endfor %}
     </table>
