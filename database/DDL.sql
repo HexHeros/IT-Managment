@@ -11,7 +11,7 @@ CREATE OR REPLACE TABLE Employees (
     last_name varchar(255) not null,
     email varchar(255) not null,
     dept_id int not null,
-    active bit not null,
+    active varchar(3) not null,
     hire_date date,
     role_id int not null,
     primary key(employee_id)
@@ -23,9 +23,9 @@ CREATE OR REPLACE TABLE Employees (
 
 INSERT INTO Employees(first_name, last_name, email, dept_id, active, hire_date, role_id)
 VALUES 
-('Devri', 'Anderson', 'da@coder.com', 1, 1, '2023-01-01', 1),
-('Jacob', 'Ogle', 'jo@coder.com', 3, 1, '2023-01-02',  2),
-('Michael', 'Scott', 'prisonmike@coder.com', 2, 1, '2023-04-29', 9);
+('Devri', 'Anderson', 'da@coder.com', 1, Yes, '2023-01-01', 1),
+('Jacob', 'Ogle', 'jo@coder.com', 3, Yes, '2023-01-02',  2),
+('Michael', 'Scott', 'prisonmike@coder.com', 2, Yes, '2023-04-29', 9);
 
 --
 -- Table structure for table `Devices`
@@ -109,7 +109,7 @@ CREATE OR REPLACE TABLE Trainings(
     training_id int not null auto_increment,
     title nvarchar(255),
     duration_in_min int,
-    required_status bit not null,
+    required_status varchar(3) not null,
     primary key(training_id)
 );
 
@@ -119,9 +119,9 @@ CREATE OR REPLACE TABLE Trainings(
 
 INSERT INTO Trainings(title, duration_in_min, required_status)
 VALUES
-('SQL Certification', 120, 1),
-('Reverse Running in Red Rock', 10, 0),
-('Don’t Get Hacked 101', 60, 0);
+('SQL Certification', 120, Yes),
+('Reverse Running in Red Rock', 10, No),
+('Don’t Get Hacked 101', 60, No);
 
 --
 -- Table structure for table `Passwords`
@@ -155,9 +155,9 @@ CREATE OR REPLACE TABLE TrainingDetails(
     employee_id int,
     training_id int,
     completion_date date not null,
-    pass_or_fail bit not null,
+    pass_or_fail varchar(4) not null,
     primary key(training_details_id),
-    foreign key(employee_id) references Employees(employee_id),
+    foreign key(employee_id) references Employees(employee_id) on delete cascade,
     foreign key(training_id) references Trainings(training_id) on delete cascade -- if the employee is deleted there is no reason to keep training record
 );
 
@@ -167,9 +167,9 @@ CREATE OR REPLACE TABLE TrainingDetails(
 
 INSERT INTO TrainingDetails(employee_id, training_id, completion_date, pass_or_fail)
 VALUES
-(2, 1, '2023-05-01', 1),
-(3, 3, '2023-01-05', 1),
-(1, 2, '2023-06-01', 1);
+(2, 1, '2023-05-01', pass),
+(3, 3, '2023-01-05', pass),
+(1, 2, '2023-06-01', pass);
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
