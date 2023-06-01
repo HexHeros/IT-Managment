@@ -1,7 +1,17 @@
+<!-- 
+  This file uses the link for icons as well as some html/css from bootstrap for the form
+  Date: 5/30/2023
+  Based off:
+  Source URL: https://stackoverflow.com/questions/54087985/i-cant-get-my-font-awesome-icons-to-show-up-tried-importing-css-with-multiple
+              https://epicbootstrap.com/snippets/registration
+-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +21,23 @@
 <body>
     <h1>Add Role</h1>
     <p>This section allows you to add a role to the Hex Heros IT Management system.</p>
-    <a href="/roles">Back</a>
+    <a href="/roles" button class="btn"><i class="fa fa-close"></i>Back</a>
     <br>
-    <hr>
-    <form title="new_role" method="post">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title">
-        <label for="access_level">Access Level:</label>
-        <input type="text" id="access_level" name="access_level">
-        <input type="submit" value="Submit"><br>
-        <br>
-    </form>
+    <br>
+    <div class="container">
+        <form title="new_role" method="post">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="access_level">Access Level:</label>
+                <input type="text" id="access_level" name="access_level">
+            </div>
+            <button type="submit" class="button-1" value="Submit">Submit</button>
+        </form>
+    </div>
 </body>
 
 </html>
