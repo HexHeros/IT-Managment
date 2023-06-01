@@ -1,39 +1,40 @@
+<!-- 
+  This file uses pre-made icons 
+  Date: 5/30/2023
+  Based off:
+  Source URL: https://www.w3schools.com/howto/howto_css_icon_buttons.asp
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hex Heros IT Management</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <h1>Trainings</h1>
     <p>Welcome to the Trainings page. This section provides an overview of the available training programs within your organization.</p>
-    <a href="/">Back</a>
-    <h4>New Training</h4>
-    <p>Add a new training to the Hex Heros IT Management system.</p>
+    <a href="/" button class="btn"><i class="fa fa-home"></i>  Home</a></button>
+    <h4>Add New Training</h4>
+    <p class="left-align">Add a new training to the Hex Heros IT Management system.</p>
     <form title="new_training" method="post">
-        <input type="hidden" name="form_type" value="new_train">
-        <label for="title">Training Title:</label>
-        <input type="text" id="title" name="title">
-        <label for="duration_in_min">Duration (min):</label>
-        <input type="number" id="duration_in_min" name="duration_in_min">
-        <label for="required_status">Required Status:</label>
-        <input type="number" id="required_status" name="required_status" min="0" max="1">
-        <input type="submit" value="Submit"><br>
+        <div class="form-container">
+            <input type="hidden" name="form_type" value="new_train">
+            <label for="title">Training Title:</label>
+            <input type="text" id="title" name="title"><br>
+            <label for="duration_in_min">Duration (min):</label>
+            <input type="number" id="duration_in_min" name="duration_in_min"><br>
+            <label for="required_status">Required:</label>
+            <select id="required_status" name="required_status"><br>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <button type="submit" value="Submit">Submit</button>
+        <br>
         <br>
     </form>
     <table>
@@ -43,6 +44,7 @@
                 <th>Title</th>
                 <th>Duration (min)</th>
                 <th>Required Status</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -51,52 +53,64 @@
                 <th>{{ training.training_id }}</th>
                 <th>{{ training.title }}</th>
                 <th>{{ training.duration_in_min }}</th>
-                <th>{{ training.required_status }}</th>
-                <td><a href="/delete_training/{{ training.training_id }}">Delete</td>
+                <th>{{ 'Yes' if training.required_status else 'No' }}</th>
+                <td><a href="/delete_training/{{ training.training_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    
+    <br>
+    <br>
+    <br>
     <h1>Training Log</h1>
     <h4>Add Completed Training</h4>
+    <p class="left-align">Add a completed training for an employee.</p>
     <form title="new_training_log" method="post">
-        <input type="hidden" name="form_type" value="new_train_log">
-        <label for="employee_id">Employee ID:</label>
-        <input type="text" id="employee_id" name="employee_id">
-        <label for="training_id">Training ID:</label>
-        <input type="number" id="training_id" name="training_id">
-        <label for="completion_date">Completion Date:</label>
-        <input type="date" id="completion_date" name="completion_date">
-        <label for="pass_or_fail">Pass/Fail:</label>
-        <input type="number" id="pass_or_fail" name="pass_or_fail" min="0" max="1">
-        <input type="submit" value="Submit"><br>
+        <div class="form-container">
+            <input type="hidden" name="form_type" value="new_train_log">
+            <label for="employee_id">Employee ID:</label>
+            <select id="employee_id" name="employee_id">
+                {% for employee in employees %}
+                    <option value="{{ employee.employee_id }}">{{ employee.employee_id }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="training_id">Training ID:</label>
+            <input type="number" id="training_id" name="training_id">
+            <br>
+            <label for="completion_date">Completion Date:</label>
+            <input type="date" id="completion_date" name="completion_date">
+            <br>
+            <label for="pass_or_fail">Pass/Fail:</label>
+            <select id="pass_or_fail" name="pass_or_fail">
+                <option value="Pass">Pass</option>
+                <option value="Fail">Fail</option>
+            </select>
+            <br>
+        </div>
+        <button type="submit" value="Submit">Submit</button>
         <br>
     <table>
-    <thead>
-        <tr>
-            <th>Training Details ID</th>
-            <th>Employee ID</th>
-            <th>Training ID</th>
-            <th>Completion Date</th>
-            <th>Pass/Fail</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Training ID</th>
+                <th>Completion Date</th>
+                <th>Pass/Fail</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for training_det in training_details %}
             <tr>
-                <th>{{ training_det.training_details_id }}</th>
-                <th>{{ training_det.employee_id }}</th>
-                <th>{{ training_det.training_id }}</th>
-                <th>{{ training_det.completion_date }}</th>
-                <th>{{ training_det.pass_or_fail }}</th>
-                <td><a href="/delete_training_log/{{ training_det.training_details_id }}">Delete</td>
+                <td>{{ training_det.employee_id }}</td>
+                <td>{{ training_det.training_id }}</td>
+                <td>{{ training_det.completion_date }}</td>
+                <td>{{ training_det.pass_or_fail }}</td>
+                <td><a href="/delete_training_log/{{ training_det.training_details_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
             </tr>
             {% endfor %}
-        </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 </body>
 </html>
