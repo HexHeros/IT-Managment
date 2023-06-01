@@ -73,7 +73,7 @@ def edit_employee(id):
         ln = request.form['last_name']
         email = request.form['email']
         dept_id = int(request.form['dept_id'])
-        active = "Yes" if 'active' in request.form else "No"
+        active = request.form['active']
         hire_date = request.form["hire_date"]
         role_id = int(request.form["role_id"])        # UPDATE query
         query = f"UPDATE Employees SET first_name = '{fn}', last_name = '{ln}', email = '{email}', dept_id = {dept_id}, active = '{active}', hire_date = '{hire_date}', role_id = {role_id} WHERE employee_id = {eid}"
