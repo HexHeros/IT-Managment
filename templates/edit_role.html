@@ -1,0 +1,44 @@
+<!-- 
+ #   This file uses some of the css/html from bootstrap as well as a pre-made icon
+ #   Date: 5/30/2023
+ #   Incorporated from:
+ #   Source URL: https://epicbootstrap.com/snippets/registration
+                 https://www.w3schools.com/icons/fontawesome_icons_directional.asp
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Role</title>
+
+</head>
+
+<body>
+    <h1>Edit Role</h1>
+    <p>This section allows you to edit a role in the Hex Heros IT Management system.</p>
+    <a href="/roles" button class="btn"><i class="fa fa-close"></i>Back</a>
+    <br>
+    <hr>
+
+    <div>
+        <form action="/edit_role/{{ roles[0].role_id }}" method="POST">
+            <input type="hidden" id="role_id" name="role_id" value="{{ roles[0].role_id }}">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{ roles[0].title }}">
+            <br>
+            <label for="access_level">Access Level:</label>
+            <input type="number" id="access_level" name="access_level" value="{{ roles[0].access_level }}">
+            <br>
+            <input type="submit" value="Submit"><br>
+            <br>
+        </form>
+    </div>
+</body>
+
+</html>
