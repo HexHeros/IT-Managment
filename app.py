@@ -255,6 +255,29 @@ def new_role():
     
     return render_template("new_role.html")
 
+@app.route('/edit_role/<int:id>', methods=['GET', 'POST'])
+def edit_role(id):
+    """
+    Route to edit a particular department
+    """
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        title = request.form['title']
+        access_level = int(request.form['access_level'])
+        query = f"UPDATE Roles SET title = '{title}',  access_level = {access_level} WHERE role_id = %s"
+        cur.execute(query, (id,))
+        mysql.connection.commit()
+        return redirect(url_for('roles'))  
+
+    query = "SELECT * FROM Roles WHERE role_id = %s"
+    cur.execute(query, (id,))
+    roles = cur.fetchall()
+    
+    query = f"SELECT DISTINCT title FROM Roles"
+    cur.execute(query)
+    title = cur.fetchone() 
+    return render_template("edit_role.html", roles=roles, title=title)
+
 @app.route("/delete_role/<int:id>")
 def delete_role(id):
     """
