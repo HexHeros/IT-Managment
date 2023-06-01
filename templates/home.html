@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,8 @@
     <h1>Welcome to Hex Heros IT Management Software!</h1>
     <p>This platform offers a range of features to effectively manage your organization's IT infrastructure.</p> 
     <p>You can easily add new employees, devices, departments, passwords, roles, and trainings, ensuring smooth operations and enhanced security.</p>
-    
-    [ <a href="/employees">Employees</a> | <a href="/departments">Departments</a> | <a href="/roles">Roles</a> | <a href="/devices">Devices</a> | <a href="/trainings">Trainings</a> | <a href="/passwords">Passwords</a> ]
-</body>
+    <div class="home">
+        [ <a href="/employees">Employees</a> | <a href="/departments">Departments</a> | <a href="/roles">Roles</a> | <a href="/devices">Devices</a> | <a href="/trainings">Trainings</a> | <a href="/passwords">Passwords</a> ]
+    </div>
+    </body>
 </html>
