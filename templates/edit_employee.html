@@ -1,65 +1,78 @@
+<!-- 
+ #   This file uses some of the css/html from bootstrap as well as pre-made icons
+ #   Date: 5/30/2023
+ #   Incorporated from:
+ #   Source URL: https://epicbootstrap.com/snippets/registration
+                 https://www.w3schools.com/howto/howto_css_icon_buttons.asp
+                 https://www.w3schools.com/icons/fontawesome_icons_directional.asp
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hex Heros IT Management</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
     <h1>Edit Employee</h1>
     <p>This section allows you to edit an existing employee in the Hex Heros IT Management system.</p>
-    <a href="/employees">Back</a>
+    <a href="/employees" button class="btn"><i class="fa fa-close"></i>Back</a>
     <br>
-    <hr>
 
-    <div>
+    <div class="container">
         <form action="/edit_employee/{{ employees[0].employee_id }}" method="POST">
-            <input type="hidden" id="employee_id" name="employee_id" value="{{ employees[0].employee_id }}"><br>
-            <label for="first_name">First name:</label><br>
-            <input type="text" id="first_name" name="first_name" value="{{ employees[0].first_name }}"><br>
-            <label for="last_name">Last name:</label><br>
-            <input type="text" id="last_name" name="last_name" value="{{ employees[0].last_name }}"><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" value="{{ employees[0].email }}"><br>
-            <label for="dept_id">Choose a Department:</label><br>
-            <select id="dept_id" name="dept_id"><br>
-                <option value="1" {% if employees[0].dept_id == 1 %}selected{% endif %}>Software Engineering</option>
-                <option value="2" {% if employees[0].dept_id == 2 %}selected{% endif %}>Management</option>
-                <option value="3" {% if employees[0].dept_id == 3 %}selected{% endif %}>Data Analytics</option>
-            </select><br>
-            <label for="role_id">Choose a Role:</label><br>
-            <select id="role_id" name="role_id"><br>
-                <option value="0" {% if employees[0].role_id == 0 %}selected{% endif %}>Software Engineer</option>
-                <option value="1" {% if employees[0].role_id == 1 %}selected{% endif %}>Data Engineer</option>
-                <option value="2" {% if employees[0].role_id == 2 %}selected{% endif %}>Intern</option>
-                <option value="3" {% if employees[0].role_id == 3 %}selected{% endif %}>CEO</option>
-                <option value="4" {% if employees[0].role_id == 4 %}selected{% endif %}>CTO</option>
-                <option value="5" {% if employees[0].role_id == 5 %}selected{% endif %}>CFO</option>
-                <option value="6" {% if employees[0].role_id == 6 %}selected{% endif %}>IT</option>
-                <option value="7" {% if employees[0].role_id == 7 %}selected{% endif %}>Assistant to General Manager</option>
-                <option value="8" {% if employees[0].role_id == 8 %}selected{% endif %}>General Manager</option>
-            </select><br>
-            <label for="active">Active:</label>
-            <input type="number" min="0" max="1" id="active" name="active" value="{{ employees[0].active }}">
-            <label for="hire_date">Hire Date:</label>
-            <input type="date" id="hire_date" name="hire_date" value="{{ employees[0].hire_date }}"><br>
-            <input type="submit" value="Submit"><br>
+            <div class="form-group">
+                <input type="hidden" id="employee_id" name="employee_id" value="{{ employees[0].employee_id }}"><br>
+                <label for="first_name">First name:</label><br>
+                <input type="text" id="first_name" name="first_name" value="{{ employees[0].first_name }}"><br>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last name:</label><br>
+                <input type="text" id="last_name" name="last_name" value="{{ employees[0].last_name }}"><br>     
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" value="{{ employees[0].email }}"><br>
+            </div>
+            <div class="form-group">
+                <label for="dept_id">Choose a Department:</label><br>
+                <select id="dept_id" name="dept_id"><br>
+                    <option value="1" {% if employees[0].dept_id == 1 %}selected{% endif %}>Software Engineering</option>
+                    <option value="2" {% if employees[0].dept_id == 2 %}selected{% endif %}>Management</option>
+                    <option value="3" {% if employees[0].dept_id == 3 %}selected{% endif %}>Data Analytics</option>
+                </select><br>
+            </div>
+            <div class="form-group">
+                    <label for="role_id">Choose a Role:</label><br>
+                    <select id="role_id" name="role_id"><br>
+                    <option value="0" {% if employees[0].role_id == 0 %}selected{% endif %}>Software Engineer</option>
+                    <option value="1" {% if employees[0].role_id == 1 %}selected{% endif %}>Data Engineer</option>
+                    <option value="2" {% if employees[0].role_id == 2 %}selected{% endif %}>Intern</option>
+                    <option value="3" {% if employees[0].role_id == 3 %}selected{% endif %}>CEO</option>
+                    <option value="4" {% if employees[0].role_id == 4 %}selected{% endif %}>CTO</option>
+                    <option value="5" {% if employees[0].role_id == 5 %}selected{% endif %}>CFO</option>
+                    <option value="6" {% if employees[0].role_id == 6 %}selected{% endif %}>IT</option>
+                    <option value="7" {% if employees[0].role_id == 7 %}selected{% endif %}>Assistant to General Manager</option>
+                    <option value="8" {% if employees[0].role_id == 8 %}selected{% endif %}>General Manager</option>
+                </select><br>
+            </div>
+            <div class="form-group">
+                <label for="active">Active: </label>
+                <input type="checkbox" class="checkbox" id="active" name="active" value="{{ employees[0].active }}">
+            </div>
+            <div class="form-group">
+                <label for="hire_date">Hire Date:</label>
+                <input type="date" id="hire_date" name="hire_date" value="{{ employees[0].hire_date }}">
+            </div>
+            <br>
+            <button type="submit" class="button-1" value="Submit">Submit</button>
         </form>
     </div>
 </body>
