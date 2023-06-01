@@ -1,43 +1,52 @@
+<!-- 
+  This file uses the link for icons as well as some html/css from bootstrap for the form
+  Date: 5/30/2023
+  Based off:
+  Source URL: https://www.w3schools.com/howto/howto_css_icon_buttons.asp
+              https://epicbootstrap.com/snippets/registration
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hex Heros IT Management</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
     <h1>New Device</h1>
     <p>Add a new device.</p>
-    <a href="/devices">Back</a>
-    <hr>
-    <form title="new_device" method="post">
-        <label for="device_name">Device Name:</label>
-        <input type="text" id="device_name" name="device_name">
-        <label for="type">Device Type:</label>
-        <input type="text" id="type" name="type">
-        <label for="access_level">Access Level:</label>
-        <input type="number" id="access_level" name="access_level">
-        <label for="usb_access">USB Access:</label>
-        <input type="number" min="0" max="1" id="usb_access" name="usb_access">
-        <label for="employee_id">Employee ID:</label>
-        <input type="number" id="employee_id" name="employee_id">
-        <input type="submit" value="Submit"><br>
-    </form>
+    <a href="/devices" button class="btn"><i class="fa fa-close"></i>Back</a>
+    <br>
+    <div class="container">
+        <form action="/new_device" method="post">
+            <div class="form-group">
+                <label for="device_name">Device Name:</label>
+                <input type="text" id="device_name" name="device_name"><br>
+            </div>
+            <div class="form-group">
+                <label for="type">Device Type:</label>
+                <input type="text" id="type" name="type"><br>
+            </div>
+            <div class="form-group">
+                <label for="access_level">Access Level:</label>
+                <input type="number" id="access_level" name="access_level"><br>
+            </div>
+            <div class="form-group">
+                <label for="usb_access">USB Access:</label>
+                <input type="number" min="0" max="1" id="usb_access" name="usb_access"><br>
+            </div>
+            <div class="form-group">
+                <label for="employee_id">Employee ID:</label>
+                <input type="number" id="employee_id" name="employee_id"><br>
+            </div>
+            <button type="submit" class="button-1" value="Submit">Submit</button>
+        </form>
+    </div>
 </body>
 
 </html>
