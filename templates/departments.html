@@ -1,46 +1,46 @@
+<!-- 
+  This file uses pre-made icons 
+  Date: 5/30/2023
+  Based off:
+  Source URL: https://www.w3schools.com/howto/howto_css_icon_buttons.asp
+              https://www.w3schools.com/icons/fontawesome_icons_directional.asp
+-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hex Heros IT Management</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
     <h1>Departments</h1>
     <p>Welcome to the Departments page. This section allows you to manage and organize the departments within your organization.</p>
-    <a href="/">Back</a>
+    <a href="/" button class="btn"><i class="fa fa-home"></i>  Home</a></button>
     <br>
-    <a href="/new_department">Add New Department</a>
     <br>
-    <hr>
+    <br>
+    <a href="/new_department" button class="btn"><i class="fa fa-plus"></i> New Department</a></button>
+    <br>
+    <br>
+    <br>
     <table>
         <tr>
             <th>Department ID</th>
             <th>Department Name</th>
             <th>Manager</th>
+            <th>Edit</th>
         </tr>
         {% for department in departments %}
         <tr>
             <th>{{ department.dept_id }}</th>
             <th>{{ department.dept_name }}</th>
             <th>{{ department.manager_employee_id }}</th>
-            <td><a href="/edit_department/{{ department.dept_id }}">Edit</td>
+            <td><a href="/edit_department/{{ department.dept_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></td>
         </tr>
         {% endfor %}
     </table>
