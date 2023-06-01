@@ -137,14 +137,21 @@ def departments():
 def new_department():
     """
     Handles the creation of a new department.
-    
+
     POST - handle the form submission for creating a new department
     """
     cur = mysql.connection.cursor()
     if request.method == "POST":
         dept_name = request.form["dept_name"]
-        manager_id = request.form['manager_employee_id']
-        query = "INSERT INTO Departments( dept_name, manager_employee_id )\n"
+        manager_id = request.form['manager_employee_id']  # Get the selected manager's ID
+
+        # Retrieve the corresponding first_name and last_name of the selected manager
+        query = "SELECT first_name, last_name FROM Employees WHERE employee_id = %s"
+        cur.execute(query, (manager_id,))
+        manager = cur.fetchone()
+
+        # Insert the new department with the retrieved manager_id
+        query = "INSERT INTO Departments (dept_name, manager_employee_id)\n"
         vals = f"VALUES ('{dept_name}', '{manager_id}')"
         cur.execute(query+vals)
         mysql.connection.commit()
@@ -153,7 +160,7 @@ def new_department():
         query = "SELECT employee_id, first_name, last_name FROM Employees"
         cur.execute(query)
         managers = cur.fetchall()
-    return render_template("new_department.html", managers=managers)
+    return render_template("new_department.html", managers=managers, manager=manager)
 
 @app.route('/edit_department/<int:dept_id>', methods=['GET', 'POST'])
 def edit_department(dept_id):
