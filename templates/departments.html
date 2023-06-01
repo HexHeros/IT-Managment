@@ -34,6 +34,7 @@
             <th>Department Name</th>
             <th>Manager</th>
             <th>Edit</th>
+            <th>Delete</th>
         </tr>
         {% for department in departments %}
         <tr>
@@ -41,7 +42,8 @@
             <th>{{ department.dept_name }}</th>
             <th>{{ department.manager_employee_id }}</th>
             <td><a href="/edit_department/{{ department.dept_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></td>
-        </tr>
+            <td><a href="/delete_department/{{ department.dept_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
+            </tr>
         {% endfor %}
     </table>
 </body>
