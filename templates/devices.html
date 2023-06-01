@@ -1,32 +1,32 @@
+<!-- 
+  This file uses pre-made icons 
+  Date: 5/30/2023
+  Based off:
+  Source URL: https://www.w3schools.com/howto/howto_css_icon_buttons.asp
+              https://www.w3schools.com/icons/fontawesome_icons_directional.asp
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hex Heros IT Management</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
     <h1>Devices</h1>
     <p>Welcome to the Devices page. Here, you can explore and manage the devices used within your organization as well as add a new device.</p>
-    <a href="/">Back</a>
+    <a href="/" button class="btn"><i class="fa fa-home"></i>  Home</a></button>
     <br>
-    <a href="/new_device">Add New Device</a>
-    <hr>
+    <br>
+    <br>
+    <a href="/new_device" button class="btn"><i class="fa fa-plus"></i> New Device</a></button>
+    <br>
+    <br>
+    <br>
     <table>
         <thead>
             <tr>
