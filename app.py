@@ -353,11 +353,13 @@ def passwords():
     Render the passwords page 
     """
     cur = mysql.connection.cursor()
+    passwords = None
     if request.method == "GET":
         query = "SELECT * FROM Passwords;"
         cur.execute(query)
         passwords=cur.fetchall()
     if request.method == 'POST':
+        print('POST request received')
         # check if coming from trainings or training log
         if request.form['form_type'] == "new_password":
             password = request.form['password']
@@ -367,7 +369,12 @@ def passwords():
             vals = f"VALUES ('{password}', '{req_change}', {eid});"
             cur.execute(query+vals)
             mysql.connection.commit()
-    return render_template("passwords.html" , passwords=passwords)
+            
+            # retrieve passwords after insertion
+            query = "SELECT * FROM Passwords;"
+            cur.execute(query)
+            passwords=cur.fetchall()
+    return render_template("passwords.html", passwords=passwords)
 
 @app.route("/delete_password/<int:id>")
 def delete_password(id):
