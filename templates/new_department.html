@@ -1,7 +1,17 @@
+<!-- 
+  This file uses the link for icons as well as some html/css from bootstrap for the form
+  Date: 5/30/2023
+  Based off:
+  Source URL: https://stackoverflow.com/questions/54087985/i-cant-get-my-font-awesome-icons-to-show-up-tried-importing-css-with-multiple
+              https://epicbootstrap.com/snippets/registration
+-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,18 +21,28 @@
 <body>
     <h1>Add Department</h1>
     <p>This section allows you to add a department to the Hex Heros IT Management system.</p>
-    <a href="/departments">Back</a>
     <br>
-    <h4>New Department</h4>
-    <p>Add a new department</p>
-    <form title="new_department" method="post">
-        <label for="dept_name">Department Name:</label>
-        <input type="text" id="dept_name" name="dept_name">
-        <label for="manager_employee_id">Manager:</label>
-        <input type="number" id="manager_employee_id" name="manager_employee_id">
-        <input type="submit" value="Submit"><br>
-        <br>
-    </form>
+    <a href="/departments" button class="btn"><i class="fa fa-close"></i>Back</a>
+    <br>
+    <br>
+    <div class="container">
+        <form action="/new_department" method="post">
+            <div class="form-group">
+                <label for="dept_name">Department Name:</label>
+                <input type="text" id="dept_name" name="dept_name">
+            </div>
+            <div class="form-group">
+                <label for="manager_employee_id">Manager:</label>
+                <select id="manager_employee_id" name="manager_employee_id">
+                    {% for manager in managers %}
+                    <option value="{{ manager['manager_employee_id'] }}">{{ manager['first_name'] }} {{ manager['last_name'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" class="button-1" value="Submit"><br>
+            <br>
+        </form>
+    </div>
 </body>
 
 </html>
