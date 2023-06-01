@@ -36,7 +36,7 @@ CREATE OR REPLACE TABLE Devices(
     device_name varchar(255) not null,
     type varchar(255),
     access_level int not null,
-    usb_access bit not null,
+    usb_access varchar(3) not null,
     primary key(device_id),
     employee_id int,
     foreign key(employee_id) references Employees(employee_id) on delete set null -- if employee is deleted we may want to keep device
@@ -48,9 +48,9 @@ CREATE OR REPLACE TABLE Devices(
 
 INSERT INTO Devices(device_name, type, access_level, usb_access, employee_id)
 VALUES
-('Macbook Pro', 'Laptop', 3, 0, 3),
-('iPhone 14', 'Mobile', 1, 1, 2),
-('iMac', 'Desktop', 1, 1, 1);
+('Macbook Pro', 'Laptop', 3, 'No', 3),
+('iPhone 14', 'Mobile', 1, 'Yes', 2),
+('iMac', 'Desktop', 1, 'Yes', 1);
 
 --
 -- Table structure for table `Departments`
@@ -119,9 +119,9 @@ CREATE OR REPLACE TABLE Trainings(
 
 INSERT INTO Trainings(title, duration_in_min, required_status)
 VALUES
-('SQL Certification', 120, Yes),
-('Reverse Running in Red Rock', 10, No),
-('Don’t Get Hacked 101', 60, No);
+('SQL Certification', 120, 'Yes'),
+('Reverse Running in Red Rock', 10, 'No'),
+('Don’t Get Hacked 101', 60, 'No');
 
 --
 -- Table structure for table `Passwords`
@@ -130,7 +130,7 @@ VALUES
 CREATE OR REPLACE TABLE Passwords(
     password_id int not null auto_increment,
     password varchar(255) not null,
-    req_change bit not null,
+    req_change varchar(3) not null,
     employee_id int,
     primary key(password_id),
     foreign key(employee_id) references Employees(employee_id) on delete cascade -- if employee is deleted no reason to keep password
@@ -142,9 +142,9 @@ CREATE OR REPLACE TABLE Passwords(
 
 INSERT INTO Passwords(password, req_change, employee_id)
 VALUES
-('abc123*!', 0, 1),
-('password', 0, 2),
-('DunderMifflin1', 1, 3);
+('abc123*!', 'No', 1),
+('password', 'No', 2),
+('DunderMifflin1', 'Yes', 3);
 
 --
 -- Table structure for table `TrainingDetails`
@@ -167,9 +167,9 @@ CREATE OR REPLACE TABLE TrainingDetails(
 
 INSERT INTO TrainingDetails(employee_id, training_id, completion_date, pass_or_fail)
 VALUES
-(2, 1, '2023-05-01', pass),
-(3, 3, '2023-01-05', pass),
-(1, 2, '2023-06-01', pass);
+(2, 1, '2023-05-01', 'pass'),
+(3, 3, '2023-01-05', 'pass'),
+(1, 2, '2023-06-01', 'pass');
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
