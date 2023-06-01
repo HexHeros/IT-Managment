@@ -143,16 +143,16 @@ def new_department():
     cur = mysql.connection.cursor()
     if request.method == "POST":
         dept_name = request.form["dept_name"]
-        manager_id = request.form['manager_employee_id']  # Get the selected manager's ID
+        manager_id = int(request.form['manager_employee_id'])  # Get the selected manager's ID
 
         # Retrieve the corresponding first_name and last_name of the selected manager
         query = "SELECT first_name, last_name FROM Employees WHERE employee_id = %s"
         cur.execute(query, (manager_id,))
-        manager = cur.fetchone()
+        managers = cur.fetchall()
 
         # Insert the new department with the retrieved manager_id
         query = "INSERT INTO Departments (dept_name, manager_employee_id)\n"
-        vals = f"VALUES ('{dept_name}', '{manager_id}')"
+        vals = f"VALUES ('{dept_name}', {manager_id})"
         cur.execute(query+vals)
         mysql.connection.commit()
         return redirect(url_for('departments'))
@@ -160,7 +160,7 @@ def new_department():
         query = "SELECT employee_id, first_name, last_name FROM Employees"
         cur.execute(query)
         managers = cur.fetchall()
-    return render_template("new_department.html", managers=managers, manager=manager)
+    return render_template("new_department.html", managers=managers)
 
 @app.route('/edit_department/<int:dept_id>', methods=['GET', 'POST'])
 def edit_department(dept_id):
@@ -347,7 +347,7 @@ def delete_training_log(id):
     return redirect(url_for('trainings'))
 
 
-@app.route('/passwords')
+@app.route('/passwords', methods=['GET', 'POST'])
 def passwords():
     """
     Render the passwords page 
@@ -357,6 +357,16 @@ def passwords():
         query = "SELECT * FROM Passwords;"
         cur.execute(query)
         passwords=cur.fetchall()
+    if request.method == 'POST':
+        # check if coming from trainings or training log
+        if request.form['form_type'] == "new_password":
+            password = request.form['password']
+            req_change = request.form['req_change'] 
+            eid = int(request.form['employee_id'])
+            query = "INSERT INTO Passwords (password, req_change, employee_id)"
+            vals = f"VALUES ('{password}', '{req_change}', {eid});"
+            cur.execute(query+vals)
+            mysql.connection.commit()
     return render_template("passwords.html" , passwords=passwords)
 
 @app.route("/delete_password/<int:id>")
@@ -371,6 +381,7 @@ def delete_password(id):
     mysql.connection.commit()
     # redirect back to people page
     return redirect(url_for('passwords'))
+
 
 # Listener
 if __name__ == "__main__":
