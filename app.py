@@ -342,6 +342,9 @@ def delete_training_log(id):
 
 @app.route('/passwords')
 def passwords():
+    """
+    Render the passwords page 
+    """
     cur = mysql.connection.cursor()
     if request.method == "GET":
         query = "SELECT * FROM Passwords;"
