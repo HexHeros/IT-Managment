@@ -44,23 +44,17 @@
             <div class="form-group">
                 <label for="dept_id">Choose a Department:</label><br>
                 <select id="dept_id" name="dept_id"><br>
-                    <option value="1" {% if employees[0].dept_id == 1 %}selected{% endif %}>Software Engineering</option>
-                    <option value="2" {% if employees[0].dept_id == 2 %}selected{% endif %}>Management</option>
-                    <option value="3" {% if employees[0].dept_id == 3 %}selected{% endif %}>Data Analytics</option>
+                    {% for department in departments %}
+                    <option value="{{ department.dept_id }}" {% if department.dept_id == employees[0].dept_id %}selected{% endif %}>{{ department.dept_name }}</option>
+                    {% endfor %}
                 </select><br>
             </div>
             <div class="form-group">
                     <label for="role_id">Choose a Role:</label><br>
                     <select id="role_id" name="role_id"><br>
-                    <option value="0" {% if employees[0].role_id == 0 %}selected{% endif %}>Software Engineer</option>
-                    <option value="1" {% if employees[0].role_id == 1 %}selected{% endif %}>Data Engineer</option>
-                    <option value="2" {% if employees[0].role_id == 2 %}selected{% endif %}>Intern</option>
-                    <option value="3" {% if employees[0].role_id == 3 %}selected{% endif %}>CEO</option>
-                    <option value="4" {% if employees[0].role_id == 4 %}selected{% endif %}>CTO</option>
-                    <option value="5" {% if employees[0].role_id == 5 %}selected{% endif %}>CFO</option>
-                    <option value="6" {% if employees[0].role_id == 6 %}selected{% endif %}>IT</option>
-                    <option value="7" {% if employees[0].role_id == 7 %}selected{% endif %}>Assistant to General Manager</option>
-                    <option value="8" {% if employees[0].role_id == 8 %}selected{% endif %}>General Manager</option>
+                    {% for role in roles %}
+                    <option value="{{ role.role_id }}" {% if role.role_id == employees[0].role_id %}selected{% endif %}>{{ role.title }}</option>
+                    {% endfor %}
                 </select><br>
             </div>
             <div class="form-group">
