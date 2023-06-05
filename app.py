@@ -31,7 +31,7 @@ def employees():
     cur = mysql.connection.cursor()
     if request.method == "GET":
         # Retrieve all employees in the database
-        query = "SELECT * from Employees;"
+        query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id JOIN Roles r ON e.role_id = r.role_id;"
         cur.execute(query)
         employees = cur.fetchall()
     return render_template("employees.html", employees=employees)
@@ -57,7 +57,15 @@ def new_employee():
         cur.execute(query+vals)
         mysql.connection.commit()
         return redirect(url_for('employees'))
-    return render_template("new_employee.html")
+    if request.method == "GET":
+        query = "SELECT dept_id, dept_name FROM Departments;"
+        cur.execute(query)
+        departments = cur.fetchall()
+        
+        query = "SELECT role_id, title FROM Roles;"
+        cur.execute(query)
+        roles = cur.fetchall()
+    return render_template("new_employee.html", departments=departments, roles=roles)
 
 @app.route('/edit_employee/<int:id>', methods=["GET", "POST"])
 def edit_employee(id):
@@ -75,7 +83,8 @@ def edit_employee(id):
         dept_id = int(request.form['dept_id'])
         active = request.form['active']
         hire_date = request.form["hire_date"]
-        role_id = int(request.form["role_id"])        # UPDATE query
+        role_id = int(request.form["role_id"])        
+        # UPDATE query
         query = f"UPDATE Employees SET first_name = '{fn}', last_name = '{ln}', email = '{email}', dept_id = {dept_id}, active = '{active}', hire_date = '{hire_date}', role_id = {role_id} WHERE employee_id = {eid}"
         # Execute the query to update the employee
         cur.execute(query)
@@ -83,16 +92,18 @@ def edit_employee(id):
         return redirect(url_for('employees'))
     if request.method == "GET":
         # Render the form for editing an employee
-        query = f"SELECT * from Employees WHERE employee_id={id};"
+        query = f"SELECT e.employee_id, e.first_name, e.last_name, e.email, e.dept_id, e.active, e.hire_date, r.role_id, r.title, d.dept_id, d.dept_name FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id JOIN Roles r ON e.role_id = r.role_id WHERE employee_id={id};"
         cur.execute(query)
         employees = cur.fetchall()
-        return render_template("edit_employee.html", employees=employees)
-    else:
-        # Fetch the employee data for displaying in the edit area
-        query = f"SELECT * FROM Employees WHERE employee_id = %s"
-        cur.execute(query, (id,))
-        result = cur.fetchall()
-        return render_template("edit_employee.html", employees=result)
+        
+        query = "SELECT dept_id, dept_name FROM Departments;"
+        cur.execute(query)
+        departments = cur.fetchall()
+        
+        query = "SELECT role_id, title FROM Roles;"
+        cur.execute(query)
+        roles = cur.fetchall()
+        return render_template("edit_employee.html", employees=employees, departments=departments, roles=roles)
 
 @app.route("/delete_employee/<int:id>", methods=["POST"])
 def delete_people(id):
@@ -179,8 +190,8 @@ def edit_department(dept_id):
         # Render the form for editing a department
         query = f"SELECT DISTINCT d.dept_id, d.dept_name, d.manager_employee_id, e.first_name, e.last_name FROM Departments d LEFT JOIN Employees e ON d.manager_employee_id = e.employee_id WHERE d.dept_id = {dept_id}"
         cur.execute(query)
-        departments = cur.fetchall()  # Fetch a single row
-
+        departments = cur.fetchall()  
+ 
         # Fetch all employees for the dropdown
         query = "SELECT employee_id, first_name, last_name FROM Employees"
         cur.execute(query)
@@ -199,6 +210,7 @@ def delete_department(id):
     mysql.connection.commit()
     # redirect back to departments page
     return redirect(url_for('departments'))
+
 @app.route('/devices')
 def devices():
     """
@@ -423,6 +435,7 @@ def delete_password(id):
     mysql.connection.commit()
     # redirect back to people page
     return redirect(url_for('passwords'))
+
 
 
 # Listener
