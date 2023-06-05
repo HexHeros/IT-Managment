@@ -27,10 +27,14 @@ def root():
 def employees():
     """
     Render the employees page and pass employee data
+    This section uses aliases
+    Date: 6/5/23
+    Adapted from:
+    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     cur = mysql.connection.cursor()
     if request.method == "GET":
-        # Retrieve all employees in the database
+        # Retrieve employees using join to get dept_name and title
         query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id JOIN Roles r ON e.role_id = r.role_id;"
         cur.execute(query)
         employees = cur.fetchall()
