@@ -34,7 +34,7 @@ def employees():
     """
     cur = mysql.connection.cursor()
     if request.method == "GET":
-        # Retrieve employees using join to get dept_name and title
+        # Retrieve employees using join to get dept_name and title instead of ID
         query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id JOIN Roles r ON e.role_id = r.role_id;"
         cur.execute(query)
         employees = cur.fetchall()
@@ -142,8 +142,8 @@ def departments():
     """
     cur = mysql.connection.cursor()
     if request.method == "GET":
-        # Retrieve all departments in the database
-        query = "SELECT * from Departments"
+        # Retrieve departments using a join to show manager's name instead of ID
+        query = "SELECT d.dept_id, d.dept_name, e.first_name, e.last_name FROM Departments d JOIN Employees e ON d.manager_employee_id = e.employee_id;"
         cur.execute(query)
         departments = cur.fetchall()
     return render_template("departments.html", departments=departments)
