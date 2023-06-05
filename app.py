@@ -186,7 +186,19 @@ def edit_department(dept_id):
         cur.execute(query)
         employees = cur.fetchall()
         return render_template("edit_department.html", departments=departments, employees=employees)
-
+    
+@app.route("/delete_department/<int:id>")
+def delete_department(id):
+    """
+    Route to handle deleting a department with the passed id.
+    """
+    cur = mysql.connection.cursor()
+    # mySQL query to delete the department with our passed id
+    query = f"DELETE FROM Departments WHERE dept_id = %s;"
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # redirect back to departments page
+    return redirect(url_for('departments'))
 @app.route('/devices')
 def devices():
     """
