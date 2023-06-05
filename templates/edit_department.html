@@ -34,7 +34,7 @@
             <label for="manager_employee_id">Manager:</label>
             <select id="manager_employee_id" name="manager_employee_id">
                 {% for employee in employees %}
-                    <option value="{{ employee['employee_id'] }}" {% if employee['employee_id'] == departments.manager_employee_id %}selected{% endif %}>
+                    <option value="{{ employee['employee_id'] }}" {% if employee['employee_id'] == departments[0].manager_employee_id %}selected{% endif %}>
                         {{ employee['first_name'] }} {{ employee['last_name'] }}
                     </option>
                 {% endfor %}
