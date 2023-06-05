@@ -40,7 +40,7 @@
         <tr>
             <th>{{ department.dept_id }}</th>
             <th>{{ department.dept_name }}</th>
-            <th>{{ department.manager_employee_id }}</th>
+            <th>{{ department.first_name }} {{ department.last_name }}</th>
             <td><a href="/edit_department/{{ department.dept_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></td>
             <td><a href="/delete_department/{{ department.dept_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
             </tr>
