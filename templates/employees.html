@@ -31,11 +31,12 @@
     <br>
     <table>
         <tr>
+            <th>Employee ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Department ID</th>
-            <th>Role ID</th>
+            <th>Department</th>
+            <th>Role</th>
             <th>Active</th>
             <th>Hire Date</th>
             <th>Edit</th>
@@ -43,11 +44,12 @@
         </tr>
         {% for employee in employees %}
         <tr>
+            <th>{{ employee.employee_id }}</th>
             <th>{{ employee.first_name }}</th>
             <th>{{ employee.last_name }}</th>
             <th>{{ employee.email }}</th>
-            <th>{{ employee.dept_id }}</th>
-            <th>{{ employee.role_id }}</th>
+            <th>{{ employee.dept_name }}</th>
+            <th>{{ employee.title }}</th>
             <th>{{ employee.active }}</th>
             <th>{{ employee.hire_date }}</th>
             <td><a href="/edit_employee/{{ employee.employee_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></a></td>
