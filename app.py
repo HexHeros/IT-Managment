@@ -34,8 +34,8 @@ def employees():
     """
     cur = mysql.connection.cursor()
     if request.method == "GET":
-        # Retrieve employees using join to get dept_name and title instead of ID
-        query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id JOIN Roles r ON e.role_id = r.role_id;"
+        # Retrieve employees using left join to get dept_name and title instead of ID and ensure all employees are included even if they aren't assigned a role/department
+        query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e LEFT JOIN Departments d ON e.dept_id = d.dept_id LEFT JOIN Roles r ON e.role_id = r.role_id;"
         cur.execute(query)
         employees = cur.fetchall()
     return render_template("employees.html", employees=employees)
@@ -95,8 +95,8 @@ def edit_employee(id):
         mysql.connection.commit()
         return redirect(url_for('employees'))
     if request.method == "GET":
-        # Render the form for editing an employee
-        query = f"SELECT e.employee_id, e.first_name, e.last_name, e.email, e.dept_id, e.active, e.hire_date, r.role_id, r.title, d.dept_id, d.dept_name FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id JOIN Roles r ON e.role_id = r.role_id WHERE employee_id={id};"
+        # Retrieve employees using left join to get dept_name and title instead of ID and ensure all employees are included even if they aren't assigned a role/department
+        query = f"SELECT e.employee_id, e.first_name, e.last_name, e.email, e.dept_id, e.active, e.hire_date, r.role_id, r.title, d.dept_id, d.dept_name FROM Employees e LEFT JOIN Departments d ON e.dept_id = d.dept_id LEFT JOIN Roles r ON e.role_id = r.role_id WHERE employee_id={id};"
         cur.execute(query)
         employees = cur.fetchall()
         
@@ -142,8 +142,8 @@ def departments():
     """
     cur = mysql.connection.cursor()
     if request.method == "GET":
-        # Retrieve departments using a join to show manager's name instead of ID
-        query = "SELECT d.dept_id, d.dept_name, e.first_name, e.last_name FROM Departments d JOIN Employees e ON d.manager_employee_id = e.employee_id;"
+        # Retrieve departments using a left join to show manager's name instead of ID - show all departments even if they don't have a manager
+        query = "SELECT d.dept_id, d.dept_name, e.first_name, e.last_name FROM Departments d LEFT JOIN Employees e ON d.manager_employee_id = e.employee_id;"
         cur.execute(query)
         departments = cur.fetchall()
     return render_template("departments.html", departments=departments)
@@ -191,7 +191,7 @@ def edit_department(dept_id):
         mysql.connection.commit()
         return redirect(url_for('departments')) 
     if request.method == 'GET':
-        # Render the form for editing a department
+        # Retrieve departments using left join to get first_name and last_name instead of ID and ensure all departments are included even if they aren't assigned to an employee
         query = f"SELECT DISTINCT d.dept_id, d.dept_name, d.manager_employee_id, e.first_name, e.last_name FROM Departments d LEFT JOIN Employees e ON d.manager_employee_id = e.employee_id WHERE d.dept_id = {dept_id}"
         cur.execute(query)
         departments = cur.fetchall()  
@@ -225,8 +225,8 @@ def devices():
     # results = cursor.fetchall()
     cur = mysql.connection.cursor()
     if request.method == "GET":
-        # Retrieve all departments in the database
-        query = "SELECT d.device_name, d.type, d.access_level, d.usb_access, e.first_name, e.last_name from Devices d JOIN Employees e ON d.employee_id = e.employee_id;"
+         # Retrieve devices using left join to get first_name and last_name instead of ID and ensure all devices are included even if they aren't assigned to an employee
+        query = "SELECT d.device_id, d.device_name, d.type, d.access_level, d.usb_access, e.first_name, e.last_name from Devices d LEFT JOIN Employees e ON d.employee_id = e.employee_id;"
         cur.execute(query)
         devices = cur.fetchall()
     return render_template("devices.html", devices=devices)
