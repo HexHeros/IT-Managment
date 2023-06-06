@@ -32,6 +32,7 @@
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
             </select>
+            <br>
         </div>
         <button type="submit" value="Submit">Submit</button>
         <br>
@@ -50,10 +51,10 @@
         <tbody>
             {% for training in trainings %}
             <tr>
-                <th>{{ training.training_id }}</th>
-                <th>{{ training.title }}</th>
-                <th>{{ training.duration_in_min }}</th>
-                <th>{{ 'Yes' if training.required_status else 'No' }}</th>
+                <td>{{ training.training_id }}</td>
+                <td>{{ training.title }}</td>
+                <td>{{ training.duration_in_min }}</td>
+                <td>{{ 'Yes' if training.required_status else 'No' }}</td>
                 <td><a href="/delete_training/{{ training.training_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
             </tr>
             {% endfor %}
