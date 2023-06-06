@@ -34,15 +34,15 @@
         <form action="/new_employee" method="POST">
             <div class="form-group">
                 <label for="first_name">First name:</label><br>
-                <input type="text" class="form-control item" id="first_name" name="first_name">
+                <input type="text" class="form-control item" id="first_name" name="first_name" required>
             </div>
             <div class="form-group">
                 <label for="last_name">Last name:</label><br>
-                <input type="text" class="form-control item" id="last_name" name="last_name">
+                <input type="text" class="form-control item" id="last_name" name="last_name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label><br>
-                <input type="email" class="form-control item" id="email" name="email">
+                <input type="email" class="form-control item" id="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="dept_id">Choose a Department:</label><br>
@@ -69,7 +69,7 @@
             </div>
             <div class="form-group">
                 <label for="hire_date">Hire Date:</label>
-                <input type="date" class="form-control item" id="hire_date" name="hire_date"><br>
+                <input type="date" class="form-control item" id="hire_date" name="hire_date" required><br>
             </div>
             <button type="submit" class="button-1" value="Submit">Submit</button>
         </form>
