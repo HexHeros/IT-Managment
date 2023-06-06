@@ -357,11 +357,16 @@ def trainings():
         cur.execute(query)
         training_details_res = cur.fetchall()
         
+        # retrieve all trainings to populate dropdown
+        query = "SELECT training_id FROM Trainings;"
+        cur.execute(query)
+        training_ids = cur.fetchall()
+        
         # grab all employees
         query = "SELECT * FROM Employees;"
         cur.execute(query)
         employees = cur.fetchall()
-        return render_template("trainings.html", trainings=trainings_res, training_details=training_details_res, employees=employees)    
+        return render_template("trainings.html", trainings=trainings_res, training_details=training_details_res, training_ids=training_ids, employees=employees)    
     if request.method == 'POST':
         
         # check if coming from trainings or training log
@@ -442,7 +447,12 @@ def passwords():
             query = "SELECT * FROM Passwords;"
             cur.execute(query)
             passwords=cur.fetchall()
-    return render_template("passwords.html", passwords=passwords)
+    
+    # retrieve all employees to populate for dropdown option
+    query = f"SELECT employee_id, first_name, last_name FROM Employees;"
+    cur.execute(query)
+    employees = cur.fetchall()
+    return render_template("passwords.html", passwords=passwords, employees=employees)
 
 @app.route("/delete_password/<int:id>")
 def delete_password(id):
