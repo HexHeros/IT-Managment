@@ -5,7 +5,7 @@
  #   Source URL: https://epicbootstrap.com/snippets/registration
                  https://www.w3schools.com/howto/howto_css_icon_buttons.asp
                  https://www.w3schools.com/icons/fontawesome_icons_directional.asp
-
+        
  #   This file uses a for loop to grab current departments and roles in the database, and pulls what is currently in each field that needs to be edited
  #   Date: 6/5/23
  #   Incorporated from:
@@ -36,15 +36,15 @@
             <div class="form-group">
                 <input type="hidden" id="employee_id" name="employee_id" value="{{ employees[0].employee_id }}"><br>
                 <label for="first_name">First name:</label><br>
-                <input type="text" id="first_name" name="first_name" value="{{ employees[0].first_name }}"><br>
+                <input type="text" id="first_name" name="first_name" value="{{ employees[0].first_name }}" required><br>
             </div>
             <div class="form-group">
                 <label for="last_name">Last name:</label><br>
-                <input type="text" id="last_name" name="last_name" value="{{ employees[0].last_name }}"><br>     
+                <input type="text" id="last_name" name="last_name" value="{{ employees[0].last_name }}" required><br>     
             </div>
             <div class="form-group">
                 <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" value="{{ employees[0].email }}"><br>
+                <input type="email" id="email" name="email" value="{{ employees[0].email }}" required><br>
             </div>
             <div class="form-group">
                 <label for="dept_id">Choose a Department:</label><br>
@@ -71,7 +71,7 @@
             </div>
             <div class="form-group">
                 <label for="hire_date">Hire Date:</label>
-                <input type="date" id="hire_date" name="hire_date" value="{{ employees[0].hire_date }}">
+                <input type="date" id="hire_date" name="hire_date" value="{{ employees[0].hire_date }}" required>
             </div>
             <br>
             <button type="submit" class="button-1" value="Submit">Submit</button>
