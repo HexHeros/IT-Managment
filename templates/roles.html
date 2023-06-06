@@ -37,9 +37,9 @@
         </tr>
         {% for role in roles %}
         <tr>
-            <th>{{ role.role_id }}</th>
-            <th>{{ role.title }}</th>
-            <th>{{ role.access_level }}</th>
+            <td>{{ role.role_id }}</td>
+            <td>{{ role.title }}</td>
+            <td>{{ role.access_level }}</td>
             <td><a href="/edit_role/{{ role.role_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></a></td>
             <td><a href="/delete_role/{{ role.role_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
         </tr>
