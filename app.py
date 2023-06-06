@@ -251,6 +251,19 @@ def new_device():
     
     return render_template("new_device.html")
 
+@app.route("/delete_device/<int:id>")
+def delete_device(id):
+    """
+    Route to handle deleting a device with the passed id.
+    """
+    cur = mysql.connection.cursor()
+    # mySQL query to delete the person with our passed id
+    query = f"DELETE FROM Devices WHERE device_id = %s;"
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # redirect back to people page
+    return redirect(url_for('devices'))
+
 @app.route('/roles')
 def roles():
     """
