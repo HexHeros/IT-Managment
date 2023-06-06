@@ -38,11 +38,11 @@
             </tr>
             {% for device in devices %}
             <tr>
-            <th>{{ device.device_name }}</th>
-            <th>{{ device.type }}</th>
-            <th>{{ device.access_level }}</th>
-            <th>{{ device.usb_access }}</th>
-            <th>{{ device.employee_id }}</th>
+                <td>{{ device.device_name }}</td>
+                <td>{{ device.type }}</td>
+                <td>{{ device.access_level }}</td>
+                <td>{{ device.usb_access }}</td>
+                <td>{{ device.employee_id }}</td>
             </tr>
         {% endfor %}
     </table>
