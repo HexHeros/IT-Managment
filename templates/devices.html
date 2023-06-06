@@ -35,6 +35,7 @@
                 <th>Access Level</th>
                 <th>USB Access</th>
                 <th>Employee ID</th>
+                <th>Delete</th>
             </tr>
             {% for device in devices %}
             <tr>
@@ -43,6 +44,7 @@
                 <td>{{ device.access_level }}</td>
                 <td>{{ device.usb_access }}</td>
                 <td>{{ device.employee_id }}</td>
+                <td><a href="/delete_device/{{ device.device_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
             </tr>
         {% endfor %}
     </table>
