@@ -30,7 +30,7 @@
         <form action="/edit_role/{{ roles[0].role_id }}" method="POST">
             <input type="hidden" id="role_id" name="role_id" value="{{ roles[0].role_id }}">
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="{{ roles[0].title }}">
+            <input type="text" id="title" name="title" value="{{ roles[0].title }}" required>
             <br>
             <label for="access_level">Access Level:</label>
             <select id="access_level" name="access_level">
