@@ -44,14 +44,14 @@
         </tr>
         {% for employee in employees %}
         <tr>
-            <th>{{ employee.employee_id }}</th>
-            <th>{{ employee.first_name }}</th>
-            <th>{{ employee.last_name }}</th>
-            <th>{{ employee.email }}</th>
-            <th>{{ employee.dept_name }}</th>
-            <th>{{ employee.title }}</th>
-            <th>{{ employee.active }}</th>
-            <th>{{ employee.hire_date }}</th>
+            <td>{{ employee.employee_id }}</td>
+            <td>{{ employee.first_name }}</td>
+            <td>{{ employee.last_name }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.dept_name }}</td>
+            <td>{{ employee.title }}</td>
+            <td>{{ employee.active }}</td>
+            <td>{{ employee.hire_date }}</td>
             <td><a href="/edit_employee/{{ employee.employee_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></a></td>
             <td><a href="/confirm_delete/{{ employee.employee_id }}" class="delete-icon"><i class="	fas fa-trash-alt"></i></a></td>
         </tr>
