@@ -26,27 +26,31 @@
     <br>
     <hr>
 
-    <div>
+    <div class="container">
         <form action="/edit_role/{{ roles[0].role_id }}" method="POST">
             <input type="hidden" id="role_id" name="role_id" value="{{ roles[0].role_id }}">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="{{ roles[0].title }}" required>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="{{ roles[0].title }}" required>
+            </div>
             <br>
-            <label for="access_level">Access Level:</label>
-            <select id="access_level" name="access_level">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
+            <div class="form-group">
+                <label for="access_level">Access Level:</label>
+                <select id="access_level" name="access_level">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
             <br>
-            <input type="submit" value="Submit"><br>
+            <input type="submit" class ="button-1" value="Submit"><br>
             <br>
         </form>
     </div>
