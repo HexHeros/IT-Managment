@@ -61,6 +61,7 @@ def new_employee():
         cur.execute(query+vals)
         mysql.connection.commit()
         return redirect(url_for('employees'))
+    
     if request.method == "GET":
         query = "SELECT dept_id, dept_name FROM Departments;"
         cur.execute(query)
@@ -87,13 +88,16 @@ def edit_employee(id):
         dept_id = int(request.form['dept_id'])
         active = request.form['active']
         hire_date = request.form["hire_date"]
-        role_id = int(request.form["role_id"])        
+        role_id = int(request.form["role_id"]) 
+               
         # UPDATE query
         query = f"UPDATE Employees SET first_name = '{fn}', last_name = '{ln}', email = '{email}', dept_id = {dept_id}, active = '{active}', hire_date = '{hire_date}', role_id = {role_id} WHERE employee_id = {eid}"
+        
         # Execute the query to update the employee
         cur.execute(query)
         mysql.connection.commit()
         return redirect(url_for('employees'))
+    
     if request.method == "GET":
         # Retrieve employees using left join to get dept_name and title instead of ID and ensure all employees are included even if they aren't assigned a role/department
         query = f"SELECT e.employee_id, e.first_name, e.last_name, e.email, e.dept_id, e.active, e.hire_date, r.role_id, r.title, d.dept_id, d.dept_name FROM Employees e LEFT JOIN Departments d ON e.dept_id = d.dept_id LEFT JOIN Roles r ON e.role_id = r.role_id WHERE employee_id={id};"
@@ -119,7 +123,7 @@ def delete_people(id):
     query = f"DELETE FROM Employees WHERE employee_id = %s;"
     cur.execute(query, (id,))
     mysql.connection.commit()
-    # redirect back to people page
+    # redirect back to employee page
     return redirect(url_for('employees'))
 
 @app.route("/confirm_delete/<int:employee_id>", methods=["GET"])
@@ -190,6 +194,7 @@ def edit_department(dept_id):
         cur.execute(query)
         mysql.connection.commit()
         return redirect(url_for('departments')) 
+    
     if request.method == 'GET':
         # Retrieve departments using left join to get first_name and last_name instead of ID and ensure all departments are included even if they aren't assigned to an employee
         query = f"SELECT DISTINCT d.dept_id, d.dept_name, d.manager_employee_id, e.first_name, e.last_name FROM Departments d LEFT JOIN Employees e ON d.manager_employee_id = e.employee_id WHERE d.dept_id = {dept_id}"
@@ -208,7 +213,7 @@ def delete_department(id):
     Route to handle deleting a department with the passed id.
     """
     cur = mysql.connection.cursor()
-    # mySQL query to delete the department with our passed id
+    # mySQL query to delete the department with passed id
     query = f"DELETE FROM Departments WHERE dept_id = %s;"
     cur.execute(query, (id,))
     mysql.connection.commit()
@@ -225,7 +230,7 @@ def devices():
     # results = cursor.fetchall()
     cur = mysql.connection.cursor()
     if request.method == "GET":
-         # Retrieve devices using left join to get first_name and last_name instead of ID and ensure all devices are included even if they aren't assigned to an employee
+        # Retrieve devices using left join to get first_name and last_name instead of ID and ensure all devices are included even if they aren't assigned to an employee
         query = "SELECT d.device_id, d.device_name, d.type, d.access_level, d.usb_access, e.first_name, e.last_name from Devices d LEFT JOIN Employees e ON d.employee_id = e.employee_id;"
         cur.execute(query)
         devices = cur.fetchall()
@@ -345,7 +350,6 @@ def trainings():
     """
     
     if request.method == 'GET':
-        
         # Grab all trainings
         cur = mysql.connection.cursor()  
         query = "SELECT * FROM Trainings;"
@@ -367,8 +371,8 @@ def trainings():
         cur.execute(query)
         employees = cur.fetchall()
         return render_template("trainings.html", trainings=trainings_res, training_details=training_details_res, training_ids=training_ids, employees=employees)    
-    if request.method == 'POST':
-        
+    
+    if request.method == 'POST':    
         # check if coming from trainings or training log
         if request.form['form_type'] == "new_train":
             cur = mysql.connection.cursor()
@@ -431,8 +435,8 @@ def passwords():
         query = "SELECT * FROM Passwords;"
         cur.execute(query)
         passwords=cur.fetchall()
+        
     if request.method == 'POST':
-        print('POST request received')
         # check if coming from trainings or training log
         if request.form['form_type'] == "new_password":
             password = request.form['password']
