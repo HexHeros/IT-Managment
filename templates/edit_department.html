@@ -24,22 +24,25 @@
     <p>This section allows you to edit a department in the Hex Heros IT Management system.</p>
     <a href="/departments" button class="btn"><i class="fa fa-close"></i>Back</a>
     <br>
-    <hr>
-
-    <div>
+    <br>
+    <div class="container">
         <form action="/edit_department/{{ departments[0].dept_id }}" method="POST">
             <input type="hidden" id="dept_id" name="employee_id" value="{{ departments[0].dept_id }}"><br>
-            <label for="dept_name">Department Name:</label>
-            <input type="text" id="dept_name" name="dept_name" value="{{ departments[0].dept_name }}" required>
-            <label for="manager_employee_id">Manager:</label>
-            <select id="manager_employee_id" name="manager_employee_id">
-                {% for employee in employees %}
-                    <option value="{{ employee['employee_id'] }}" {% if employee['employee_id'] == departments[0].manager_employee_id %}selected{% endif %}>
-                        {{ employee['first_name'] }} {{ employee['last_name'] }}
-                    </option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Submit"><br>
+            <div class="form-group">
+                <label for="dept_name">Department Name:</label>
+                <input type="text" id="dept_name" name="dept_name" value="{{ departments[0].dept_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="manager_employee_id">Manager:</label>
+                <select id="manager_employee_id" name="manager_employee_id">
+                    {% for employee in employees %}
+                        <option value="{{ employee['employee_id'] }}" {% if employee['employee_id'] == departments[0].manager_employee_id %}selected{% endif %}>
+                            {{ employee['first_name'] }} {{ employee['last_name'] }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" class="button-1" value="Submit"><br>
             <br>
         </form>
     </div>
