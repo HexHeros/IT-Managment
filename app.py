@@ -21,13 +21,17 @@ mysql = MySQL(app)
 # Routes 
 @app.route('/')
 def root():
+    """
+    Index route to the home page
+    """
     return render_template("home.html")
 
 @app.route('/employees', methods=["GET"])
 def employees():
     """
     Render the employees page and pass employee data
-    This section uses aliases
+    
+    This section uses aliases for SQL query on GET
     Date: 6/5/23
     Adapted from:
     Source URL: https://www.w3schools.com/sql/sql_alias.asp
@@ -78,6 +82,10 @@ def edit_employee(id):
     Handles the editing of an existing employee.
     POST - pushes data of the employee being edited
     GET  - pulls data on the employee being edited
+    
+    This section uses aliases for SQL query on GET
+    Adapted from:
+    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     cur = mysql.connection.cursor()
     if request.method == "POST":
@@ -143,6 +151,10 @@ def confirm_delete(employee_id):
 def departments():
     """
     Renders the departments page
+    
+    This section uses aliases for SQL query on GET
+    Adapted from:
+    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     cur = mysql.connection.cursor()
     if request.method == "GET":
@@ -185,6 +197,10 @@ def new_department():
 def edit_department(dept_id):
     """
     Route to edit a particular department
+    
+    This section uses aliases for SQL query on GET
+    Adapted from:
+    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     cur = mysql.connection.cursor()
     if request.method == 'POST':
@@ -224,6 +240,10 @@ def delete_department(id):
 def devices():
     """
     Renders the devices page
+    
+    This section uses aliases for SQL query on GET
+    Adapted from:
+    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     # query = ""
     # cursor = db.execute_query(db_connection=db_connection, query=query)
