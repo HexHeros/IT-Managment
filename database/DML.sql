@@ -69,8 +69,6 @@ SELECT employee_id, first_name, last_name FROM Employees;
 -- update a Department's manager based on the Update form : represents users input
 UPDATE Departments SET dept_name = :dept_nameEdit manager_employee_id = :new_emp_id; 
 
-UPDATE Departments SET manager_employee_id = NULL; -- Nullify the current manager ** this has not been added **
-
 -- Retrieve departments using left join to get first and last name instead of ID
 -- Ensure all departments are included even if they aren't assigned to an employee
 SELECT DISTINCT d.dept_id, d.dept_name, d.manager_employee_id, e.first_name, e.last_name 
