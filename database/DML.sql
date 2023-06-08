@@ -8,7 +8,7 @@ ON e.dept_id = d.dept_id
 LEFT JOIN Roles r 
 ON e.role_id = r.role_id;
 
------------------------------------------------------ new_employee
+-------------------- new_employee
 
 -- add a new employee - : represents the users input
 INSERT INTO Employees(first_name, last_name, email, dept_id, active, hire_date, role_id)
@@ -20,7 +20,7 @@ SELECT dept_id, dept_name FROM Departments;
 --
 SELECT role_id, title FROM Roles;
 
------------------------------------------------- edit_employee
+-------------------- edit_employee
 
 -- update a Employees's data based on submission of the Update Employee form : represents the users input
 UPDATE Employees SET first_name = :first_nameInput, last_name= :last_nameInput, email = :emailInput, dept_id= :dept_idInput, active= :activeInput, hire_date= hire_dateInput, role_id= role_idInput ADD
@@ -39,7 +39,7 @@ SELECT dept_id, dept_name FROM Departments;
 
 SELECT role_id, title FROM Roles;
 
----------------------------------------------------- delete_people
+-------------------- delete_people
 
 -- delete selected employee
 DELETE FROM Employees WHERE employee_id = :employee_id_selected_from_employees_page; 
@@ -52,7 +52,8 @@ FROM Departments d
 LEFT JOIN Employees e 
 ON d.manager_employee_id = e.employee_id; 
 
------------------------------------------------------ new_department
+-------------------- new_department
+
 -- POST - Retrieve the first and last name of the selected manager 
 SELECT first_name, last_name FROM Employees WHERE employee_id = :employee_id_selected_from_dropdown;
 
@@ -63,7 +64,7 @@ VALUES (:dept_nameInput, :manager_employee_id_from_dropdown_Input);
 -- GET - Retrieves all IDs, first and last names of employees
 SELECT employee_id, first_name, last_name FROM Employees;
 
------------------------------------------------------ edit_department
+-------------------- edit_department
 
 -- update a Department's manager based on the Update form : represents users input
 UPDATE Departments SET dept_name = :dept_nameEdit manager_employee_id = :new_emp_id; 
@@ -78,7 +79,7 @@ LEFT JOIN Employees e
 ON d.manager_employee_id = e.employee_id 
 WHERE d.dept_id = {dept_id};
 
------------------------------------------------------ delete_department
+-------------------- delete_department
 
 -- delete selected department : represents selected ID
 DELETE FROM Departments WHERE dept_id = :id_selected_from_departments
@@ -92,7 +93,7 @@ FROM Devices d
 LEFT JOIN Employees e 
 ON d.employee_id = e.employee_id;
 
------------------------------------------------------ new_device
+-------------------- new_device
 
 -- inserts new device based on users input
 INSERT INTO Devices (device_name, type, access_level, usb_access, employee_id)
@@ -101,7 +102,7 @@ VALUES (:device_nameInput, :typeInput, :access_levelInput, :usb_accessInput, :em
 -- Retrieve a list of employees for device assignment dropdown
 SELECT employee_id, first_name, last_name FROM Employees;
 
------------------------------------------------------ delete_device
+-------------------- delete_device
 
 -- delete selected device : represents selected ID
 DELETE FROM Devices WHERE device_id = :id_selected_from_devices
@@ -140,7 +141,8 @@ DELETE FROM Roles WHERE role_id = :id_selected_from_roles;
 -- select all Trainings
 SELECT * FROM Trainings; 
 
--------------------- add a new_train
+-------------------- add new training
+
 INSERT INTO Trainings (title, duration_in_min, required_status)
 VALUES (:titleInput, :duration_in_minInput, :required_statusInput);
 
@@ -159,6 +161,8 @@ SELECT training_id FROM Trainings;
 
 -- retrieve all employees to assign a training
 SELECT * FROM Employees;
+
+-------------------- add new training log
 
 -- insert training details for an employee : represents user's input
 INSERT INTO TrainingDetails (employee_id, training_id, completion_date, pass_or_fail)
