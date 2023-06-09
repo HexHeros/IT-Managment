@@ -356,7 +356,7 @@ def trainings():
         cur.execute(query)
         trainings_res = cur.fetchall()
         
-        # Grab all training logs
+        # Retrieve trainings using join to get title, first, and last name instead of IDs
         query = "SELECT td.employee_id, td.training_id, td.completion_date, td.pass_or_fail, e.first_name, e.last_name, t.title FROM TrainingDetails td JOIN Employees e ON td.employee_id = e.employee_id JOIN Trainings t ON td.training_id = t.training_id;"
         cur.execute(query)
         training_details_res = cur.fetchall()
