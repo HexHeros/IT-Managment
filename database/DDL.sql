@@ -167,9 +167,9 @@ CREATE OR REPLACE TABLE TrainingDetails(
 
 INSERT INTO TrainingDetails(employee_id, training_id, completion_date, pass_or_fail)
 VALUES
-(2, 1, '2023-05-01', 'pass'),
-(3, 3, '2023-01-05', 'pass'),
-(1, 2, '2023-06-01', 'pass');
+(2, 1, '2023-05-01', 'Pass'),
+(3, 3, '2023-01-05', 'Pass'),
+(1, 2, '2023-06-01', 'Pass');
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
