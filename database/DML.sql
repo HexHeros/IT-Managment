@@ -14,10 +14,10 @@ ON e.role_id = r.role_id;
 INSERT INTO Employees(first_name, last_name, email, dept_id, active, hire_date, role_id)
 VALUES  (:first_nameInput, :last_nameInput, :emailInput, :dept_idInput, :activeInput, :hire_dateInput, :role_id_from_the_dropdown_Input);
 
--- 
+-- retrieve department names
 SELECT dept_id, dept_name FROM Departments;
 
---
+-- retrieve role titles
 SELECT role_id, title FROM Roles;
 
 -------------------- edit_employee
@@ -84,7 +84,7 @@ DELETE FROM Departments WHERE dept_id = :id_selected_from_departments
 
 ----------------------------------------------------- Devices
 
--- Retrieve devices using left join to get firs and last name instead of ID
+-- Retrieve devices using left join to get first and last name instead of ID
 -- ensure all devices are included even if they aren't assigned to an employee
 SELECT d.device_id, d.device_name, d.type, d.access_level, d.usb_access, e.first_name, e.last_name 
 FROM Devices d 
@@ -154,11 +154,19 @@ DELETE FROM Trainings where training_id = :training_idInput -- This will cascade
 -- select all TrainingDetails
 SELECT * FROM TrainingDetails; 
 
+-- Retrieve trainings using join to get title, first, and last name instead of displaying IDs
+SELECT td.employee_id, td.training_id, td.completion_date, td.pass_or_fail, e.first_name, e.last_name, t.title 
+FROM TrainingDetails td 
+JOIN Employees e 
+ON td.employee_id = e.employee_id 
+JOIN Trainings t 
+ON td.training_id = t.training_id;
+
 -- retrieve trainings for dropdown
-SELECT training_id FROM Trainings;
+SELECT training_id, title FROM Trainings;
 
 -- retrieve all employees to assign a training
-SELECT * FROM Employees;
+SELECT employee_id, first_name, last_name FROM Employees;
 
 -------------------- add new training log
 
