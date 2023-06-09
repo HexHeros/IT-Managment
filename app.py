@@ -21,17 +21,13 @@ mysql = MySQL(app)
 # Routes 
 @app.route('/')
 def root():
-    """
-    Index route to the home page
-    """
     return render_template("home.html")
 
 @app.route('/employees', methods=["GET"])
 def employees():
     """
     Render the employees page and pass employee data
-    
-    This section uses aliases for SQL query on GET
+    This section uses aliases
     Date: 6/5/23
     Adapted from:
     Source URL: https://www.w3schools.com/sql/sql_alias.asp
@@ -82,10 +78,6 @@ def edit_employee(id):
     Handles the editing of an existing employee.
     POST - pushes data of the employee being edited
     GET  - pulls data on the employee being edited
-    
-    This section uses aliases for SQL query on GET
-    Adapted from:
-    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     cur = mysql.connection.cursor()
     if request.method == "POST":
@@ -151,10 +143,6 @@ def confirm_delete(employee_id):
 def departments():
     """
     Renders the departments page
-    
-    This section uses aliases for SQL query on GET
-    Adapted from:
-    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     cur = mysql.connection.cursor()
     if request.method == "GET":
@@ -197,10 +185,6 @@ def new_department():
 def edit_department(dept_id):
     """
     Route to edit a particular department
-    
-    This section uses aliases for SQL query on GET
-    Adapted from:
-    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     cur = mysql.connection.cursor()
     if request.method == 'POST':
@@ -240,10 +224,6 @@ def delete_department(id):
 def devices():
     """
     Renders the devices page
-    
-    This section uses aliases for SQL query on GET
-    Adapted from:
-    Source URL: https://www.w3schools.com/sql/sql_alias.asp
     """
     # query = ""
     # cursor = db.execute_query(db_connection=db_connection, query=query)
@@ -377,20 +357,20 @@ def trainings():
         trainings_res = cur.fetchall()
         
         # Grab all training logs
-        query = "SELECT * FROM TrainingDetails;"
+        query = "SELECT td.employee_id, td.training_id, td.completion_date, td.pass_or_fail, e.first_name, e.last_name, t.title FROM TrainingDetails td JOIN Employees e ON td.employee_id = e.employee_id JOIN Trainings t ON td.training_id = t.training_id;"
         cur.execute(query)
         training_details_res = cur.fetchall()
         
         # retrieve all trainings to populate dropdown
-        query = "SELECT training_id FROM Trainings;"
+        query = "SELECT training_id, title FROM Trainings;"
         cur.execute(query)
-        training_ids = cur.fetchall()
+        training_titles = cur.fetchall()
         
         # grab all employees
-        query = "SELECT * FROM Employees;"
+        query = "SELECT employee_id, first_name, last_name FROM Employees;"
         cur.execute(query)
         employees = cur.fetchall()
-        return render_template("trainings.html", trainings=trainings_res, training_details=training_details_res, training_ids=training_ids, employees=employees)    
+        return render_template("trainings.html", trainings=trainings_res, training_details=training_details_res, training_titles=training_titles, employees=employees)    
     
     if request.method == 'POST':    
         # check if coming from trainings or training log
