@@ -58,22 +58,20 @@
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>
-                <button type="submit" value="Submit">Submit</button>
+                <button type="submit" class="button-3" value="Submit">Submit</button>
             </div>
             <br>
             <br>
         </form>
     </div>
-    <br>
-    <br>
-    <br>
     <h1>Training Log</h1>
     <br>
     <table>
         <thead>
             <tr>
                 <th>Employee ID</th>
-                <th>Training ID</th>
+                <th>Employee</th>
+                <th>Training</th>
                 <th>Completion Date</th>
                 <th>Pass/Fail</th>
                 <th>Delete</th>
@@ -83,7 +81,8 @@
             {% for training_det in training_details %}
             <tr>
                 <td>{{ training_det.employee_id }}</td>
-                <td>{{ training_det.training_id }}</td>
+                <td>{{ training_det.first_name }} {{ training_det.last_name }}</td>
+                <td>{{ training_det.title }}</td>
                 <td>{{ training_det.completion_date }}</td>
                 <td>{{ training_det.pass_or_fail }}</td>
                 <td><a href="/delete_training_log/{{ training_det.training_details_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
@@ -96,17 +95,17 @@
     <form title="new_training_log" method="post">
         <div class="form-container">
             <input type="hidden" name="form_type" value="new_train_log">
-            <label for="employee_id">Employee ID:</label>
+            <label for="employee_id">Employee:</label>
             <select id="employee_id" name="employee_id">
                 {% for employee in employees %}
-                    <option value="{{ employee.employee_id }}">{{ employee.employee_id }}</option>
+                    <option value="{{ employee.employee_id }}">{{ employee.first_name }} {{ employee.last_name }}</option>
                 {% endfor %}
             </select>
             <br>
-            <label for="training_id">Training ID:</label>
+            <label for="training_id">Training:</label>
             <select id="training_id" name="training_id" required>
                 {% for training in trainings %}
-                <option value="{{ training['training_id'] }}">{{ training['training_id'] }}</option>
+                <option value="{{ training['training_id'] }}">{{ training.title }}</option>
                 {% endfor %}
             </select>
             <br>
@@ -118,7 +117,8 @@
                 <option value="Pass">Pass</option>
                 <option value="Fail">Fail</option>
             </select>
-            <button type="submit" value="Submit">Submit</button>
+            <button type="submit" class="button-3" value="Submit">Submit</button>
         </div>
+        <div class="form-bottom"></div>
 </body>
 </html>
