@@ -23,9 +23,9 @@ CREATE OR REPLACE TABLE Employees (
 
 INSERT INTO Employees(first_name, last_name, email, dept_id, active, hire_date, role_id)
 VALUES 
-('Devri', 'Anderson', 'da@coder.com', 1, Yes, '2023-01-01', 1),
-('Jacob', 'Ogle', 'jo@coder.com', 3, Yes, '2023-01-02',  2),
-('Michael', 'Scott', 'prisonmike@coder.com', 2, Yes, '2023-04-29', 9);
+('Devri', 'Anderson', 'da@coder.com', 1, 'Yes', '2023-01-01', 1),
+('Jacob', 'Ogle', 'jo@coder.com', 3, 'Yes', '2023-01-02',  2),
+('Michael', 'Scott', 'prisonmike@coder.com', 2, 'Yes', '2023-04-29', 9);
 
 --
 -- Table structure for table `Devices`
