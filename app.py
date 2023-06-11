@@ -423,16 +423,14 @@ def delete_training_log(id):
     # redirect back to people page
     return redirect(url_for('trainings'))
 
-
 @app.route('/passwords', methods=['GET', 'POST'])
 def passwords():
     """
     Render the passwords page 
     """
     cur = mysql.connection.cursor()
-    passwords = None
     if request.method == "GET":
-        query = "SELECT * FROM Passwords;"
+        query = "SELECT p.password_id, p.password, p.req_change, e.first_name, e.last_name FROM Passwords p JOIN Employees e ON p.employee_id;"
         cur.execute(query)
         passwords=cur.fetchall()
         
@@ -448,7 +446,7 @@ def passwords():
             mysql.connection.commit()
             
             # retrieve passwords after insertion
-            query = "SELECT * FROM Passwords;"
+            query = "SELECT p.password_id, p.password, p.req_change, e.first_name, e.last_name FROM Passwords p JOIN Employees e ON p.employee_id;"
             cur.execute(query)
             passwords=cur.fetchall()
     
