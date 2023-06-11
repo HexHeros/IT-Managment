@@ -180,8 +180,16 @@ VALUES (:employee_idInput, :training_idInput, :completion_dateInput, :pass_or_fa
 DELETE FROM TrainingDetails WHERE training_id = :training_idInput
 
 ----------------------------------------------------- Passwords
-SELECT * FROM Passwords; -- select all Passwords
 
 -- add a new password : represents user's input
-INSERT INTO Passwords (title, password, req_change, employee_id)
-VALUES (:titleInput, :passwordInput, :req_changeInput, :employee_idInput)
+INSERT INTO Passwords ( password, req_change, employee_id)
+VALUES ( :passwordInput, :req_changeInput, :employee_idInput)
+
+-- retrieve passwords using join to display first and last name of employee instead of ID
+SELECT p.password_id, p.password, p.req_change, e.first_name, e.last_name 
+FROM Passwords p 
+JOIN Employees e 
+ON p.employee_id = e.employee_id;
+
+-- retrieve all employees first and last name to populate for dropdown option
+SELECT employee_id, first_name, last_name FROM Employees;
