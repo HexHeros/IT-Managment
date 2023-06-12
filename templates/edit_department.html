@@ -35,9 +35,14 @@
             <div class="form-group">
                 <label for="manager_employee_id">Manager:</label>
                 <select id="manager_employee_id" name="manager_employee_id">
+                    <option value="">None</option>
                     {% for employee in employees %}
-                        <option value="{{ employee['employee_id'] }}" {% if employee['employee_id'] == departments[0].manager_employee_id %}selected{% endif %}>
-                            {{ employee['first_name'] }} {{ employee['last_name'] }}
+                        <option value="{{ employee.employee_id }}" {% if employee.employee_id == departments[0].manager_employee_id %}selected{% endif %}>
+                            {% if employee.first_name is none and employee.last_name is none %}
+                                NULL
+                            {% else %}
+                                {{ employee.first_name }} {{ employee.last_name }}
+                            {% endif %}
                         </option>
                     {% endfor %}
                 </select>
