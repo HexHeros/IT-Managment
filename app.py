@@ -126,30 +126,28 @@ def delete_people(id):
     # redirect back to employee page
     return redirect(url_for('employees'))
 
-@app.route("/confirm_delete/<int:employee_id>", methods=["GET"])
-def confirm_delete(employee_id):
+@app.route("/confirm_delete/<int:id>", methods=["GET"])
+def confirm_delete(id):
     """
     Route to confirm deletion of employee
     """
     cur = mysql.connection.cursor()
-    #query = f"SELECT * FROM Employees WHERE employee_id = %s;"
-    #cur.execute(query, (employee_id,))
-    #mysql.connection.commit()
-    #employee = cur.fetchone()
     
-    # Retrieve employee using join to get dept_name and title instead of ID
-    query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id LEFT JOIN Roles r ON e.role_id = r.role_id;"
-    cur.execute(query)
+    # Retrieve employee using left join to get dept_name and title instead of ID
+    query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e LEFT JOIN Departments d ON e.dept_id = d.dept_id LEFT JOIN Roles r ON e.role_id = r.role_id WHERE e.employee_id = %s;"
+    cur.execute(query, (id,))
     employee = cur.fetchone()
     
+    # retrieve dept name associated with id
     query = "SELECT dept_id, dept_name FROM Departments;"
     cur.execute(query)
-    departments = cur.fetchall()
+    department = cur.fetchone()
     
+    # retrieve title associated with id
     query = "SELECT role_id, title FROM Roles;"
     cur.execute(query)
-    roles = cur.fetchall()
-    return render_template("confirm_delete.html", employee=employee, departments=departments, roles=roles)
+    role = cur.fetchone()
+    return render_template("confirm_delete.html", employee=employee, department=department, role=role)
 
 @app.route('/departments')
 def departments():
