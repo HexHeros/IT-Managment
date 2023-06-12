@@ -132,12 +132,24 @@ def confirm_delete(employee_id):
     Route to confirm deletion of employee
     """
     cur = mysql.connection.cursor()
-    query = f"SELECT * FROM Employees WHERE employee_id = %s;"
-    cur.execute(query, (employee_id,))
-    mysql.connection.commit()
+    #query = f"SELECT * FROM Employees WHERE employee_id = %s;"
+    #cur.execute(query, (employee_id,))
+    #mysql.connection.commit()
+    #employee = cur.fetchone()
+    
+    # Retrieve employee using join to get dept_name and title instead of ID
+    query = "SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date FROM Employees e JOIN Departments d ON e.dept_id = d.dept_id LEFT JOIN Roles r ON e.role_id = r.role_id;"
+    cur.execute(query)
     employee = cur.fetchone()
-    print(employee)
-    return render_template("confirm_delete.html", employee=employee)
+    
+    query = "SELECT dept_id, dept_name FROM Departments;"
+    cur.execute(query)
+    departments = cur.fetchall()
+    
+    query = "SELECT role_id, title FROM Roles;"
+    cur.execute(query)
+    roles = cur.fetchall()
+    return render_template("confirm_delete.html", employee=employee, departments=departments, roles=roles)
 
 @app.route('/departments')
 def departments():
@@ -164,6 +176,7 @@ def new_department():
         dept_name = request.form["dept_name"]
         manager_id = int(request.form['manager_employee_id'])  # Get the selected manager's ID
 
+            
         # Retrieve the corresponding first_name and last_name of the selected manager
         query = "SELECT first_name, last_name FROM Employees WHERE employee_id = %s"
         cur.execute(query, (manager_id,))
@@ -423,17 +436,13 @@ def delete_training_log(id):
     # redirect back to people page
     return redirect(url_for('trainings'))
 
+
 @app.route('/passwords', methods=['GET', 'POST'])
 def passwords():
     """
     Render the passwords page 
     """
-    cur = mysql.connection.cursor()
-    if request.method == "GET":
-        query = "SELECT p.password_id, p.password, p.req_change, e.first_name, e.last_name FROM Passwords p JOIN Employees e ON p.employee_id;"
-        cur.execute(query)
-        passwords=cur.fetchall()
-        
+    cur = mysql.connection.cursor()     
     if request.method == 'POST':
         # check if coming from trainings or training log
         if request.form['form_type'] == "new_password":
@@ -445,12 +454,12 @@ def passwords():
             cur.execute(query+vals)
             mysql.connection.commit()
             
-            # retrieve passwords after insertion
-            query = "SELECT p.password_id, p.password, p.req_change, e.first_name, e.last_name FROM Passwords p JOIN Employees e ON p.employee_id;"
-            cur.execute(query)
-            passwords=cur.fetchall()
+    # retrieve passwords using join to display first and last name of employee instead of ID
+    query = "SELECT p.password_id, p.password, p.req_change, e.first_name, e.last_name FROM Passwords p JOIN Employees e ON p.employee_id = e.employee_id;"
+    cur.execute(query)
+    passwords=cur.fetchall()
     
-    # retrieve all employees to populate for dropdown option
+    # retrieve all employees first and last name to populate for dropdown option
     query = f"SELECT employee_id, first_name, last_name FROM Employees;"
     cur.execute(query)
     employees = cur.fetchall()
