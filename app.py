@@ -173,7 +173,6 @@ def new_department():
     if request.method == "POST":
         dept_name = request.form["dept_name"]
         manager_id = int(request.form['manager_employee_id'])  # Get the selected manager's ID
-
             
         # Retrieve the corresponding first_name and last_name of the selected manager
         query = "SELECT first_name, last_name FROM Employees WHERE employee_id = %s"
@@ -201,7 +200,14 @@ def edit_department(dept_id):
     if request.method == 'POST':
         dept_name = request.form['dept_name']
         manager_id = request.form['manager_employee_id']
-        query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = '{manager_id}' WHERE dept_id = {dept_id}"
+        
+        # Set manager_id to NULL if it is an empty string
+        if not manager_id:
+            query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = NULL WHERE dept_id = {dept_id}"
+        else:
+            # update manager_employee_id with provided value
+            query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = '{manager_id}' WHERE dept_id = {dept_id}"
+        
         cur.execute(query)
         mysql.connection.commit()
         return redirect(url_for('departments')) 
