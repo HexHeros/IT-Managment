@@ -413,6 +413,40 @@ def trainings():
             mysql.connection.commit()
         
         return redirect(url_for('trainings'))
+    
+@app.route("/edit_train_log/<int:id>", methods=['GET', 'POST'])
+def edit_train_log(id):
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        employee_id = request.form['employee_id']
+        training_id = request.form['training_id']
+        completion_date = request.form['completion_date']
+        pass_or_fail = request.form['pass_or_fail']
+        
+        query = "UPDATE TrainingDetails SET employee_id = %s, training_id = %s, completion_date = %s, pass_or_fail = %s WHERE training_details_id = %s"
+        vals = (employee_id, training_id, completion_date, pass_or_fail, id)
+        cur.execute(query, vals)
+        mysql.connection.commit()
+        
+        return redirect(url_for('trainings'))
+
+    if request.method == 'GET':
+        query = "SELECT td.training_details_id, td.employee_id, td.training_id, td.completion_date, td.pass_or_fail, e.first_name, e.last_name, t.title FROM TrainingDetails td JOIN Employees e ON td.employee_id = e.employee_id JOIN Trainings t ON td.training_id = t.training_id WHERE td.training_details_id = %s;"
+        cur.execute(query, (id,))
+        training_details = cur.fetchone()
+
+        # Retrieve all trainings to populate dropdown
+        query = "SELECT training_id, title FROM Trainings;"
+        cur.execute(query)
+        trainings = cur.fetchall()
+
+        # Retrieve all employees to populate dropdown
+        query = "SELECT DISTINCT employee_id, first_name, last_name FROM Employees;"
+        cur.execute(query)
+        employees = cur.fetchall()
+
+        return render_template('edit_train_log.html', training_details=training_details, trainings=trainings, employees=employees)
+
 
 @app.route("/delete_training/<int:id>")
 def delete_training(id):
