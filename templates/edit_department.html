@@ -44,7 +44,7 @@
                     <option value="">None</option>
                     {% for employee in employees %}
                         <option value="{{ employee.employee_id }}" {% if employee.employee_id == departments[0].manager_employee_id %}selected{% endif %}>
-                            {% if not employee.first_name == None and employee.last_name == None %}
+                            {% if employee.first_name == None and employee.last_name == None %}
                                 NULL
                             {% else %}
                                 {{ employee.first_name }} {{ employee.last_name }}
