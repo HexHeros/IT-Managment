@@ -1,0 +1,74 @@
+<!-- 
+ #   This file uses some of the css/html from bootstrap as well as a pre-made icon
+ #   Date: 5/30/2023
+ #   Incorporated from:
+ #   Source URL: https://epicbootstrap.com/snippets/registration
+                 https://www.w3schools.com/icons/fontawesome_icons_directional.asp
+
+ #   This file uses a default value of NULL when user selects None from dropdown
+ #   Date: 5/30/2023
+ #   Incorporated from:
+ #   Source URL
+                 https://itecnote.com/tecnote/jinja2-template-variable-if-none-object-set-a-default-value/
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Heros IT Management</title>
+
+</head>
+
+<body>
+    <h1>Edit Training Log</h1>
+    <p>This section allows you to edit a training log in the Hex Heros IT Management system.</p>
+    <a href="/trainings" class="btn"><i class="fa fa-close"></i>Back</a>
+    <br>
+    <br>
+    <div class="container">
+        <form action="/edit_train_log/{{ training_details.training_details_id }}" method="POST">
+            <input type="hidden" id="training_details_id" name="training_details_id" value="{{ training_details.training_details_id }}"><br>
+            <div class="form-group">
+                <label for="employee_id">Employee:</label>
+                <select id="employee_id" name="employee_id" required>
+                    {% for employee in employees %}
+                    <option value="{{ employee.employee_id }}" {% if employee.employee_id == training_details.employee_id %}selected{% endif %}>
+                        {{ employee.first_name }} {{ employee.last_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="training_id">Training Title:</label>
+                <select id="training_id" name="training_id" required>
+                    {% for training in trainings %}
+                    <option value="{{ training.training_id }}" {% if training.training_id == training_details.training_id %}selected{% endif %}>
+                        {{ training.title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="completion_date">Completion Date:</label>
+                <input type="date" id="completion_date" name="completion_date" value="{{ training_details.completion_date }}" required>
+            </div>
+            <div class="form-group">
+                <label for="pass_or_fail">Pass/Fail:</label>
+                <select id="pass_or_fail" name="pass_or_fail" required>
+                    <option value="Pass" {% if training_details.pass_or_fail == 'Pass' %}selected{% endif %}>Pass</option>
+                    <option value="Fail" {% if training_details.pass_or_fail == 'Fail' %}selected{% endif %}>Fail</option>
+                </select>
+            </div>
+            <input type="submit" class="button-1" value="Submit"><br>
+            <br>
+        </form>
+    </div>
+</body>
+
+</html>
