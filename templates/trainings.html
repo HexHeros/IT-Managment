@@ -86,8 +86,8 @@
                 <td>{{ training_det.title }}</td>
                 <td>{{ training_det.completion_date }}</td>
                 <td>{{ training_det.pass_or_fail }}</td>
-                <td><a href="/edit_train_log/{{ training_det.training_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></a></td>
-                <td><a href="/delete_training_log/{{ training_det.training_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
+                <td><a href="/edit_train_log/{{ training_det.training_details_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></a></td>
+                <td><a href="/delete_training_log/{{ training_det.training_details_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
             </tr>
             {% endfor %}
         </tbody>
