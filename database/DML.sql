@@ -192,6 +192,28 @@ SELECT employee_id, first_name, last_name FROM Employees;
 INSERT INTO TrainingDetails (employee_id, training_id, completion_date, pass_or_fail)
 VALUES (:employee_idInput, :training_idInput, :completion_dateInput, :pass_or_failInput)
 
+-------------------- edit_train_log
+
+-- update training details based on update form : represents users input
+UPDATE TrainingDetails 
+SET employee_id = :employee_idEdit, training_id = :training_idEdit, completion_date = completion_dateEdit, pass_or_fail = pass_or_failEdit 
+WHERE training_details_id = :selected_id
+
+-- Retrieve trainings using join to get title, first, and last name instead of displaying IDs
+SELECT td.training_details_id, td.employee_id, td.training_id, td.completion_date, td.pass_or_fail, e.first_name, e.last_name, t.title 
+FROM TrainingDetails td 
+JOIN Employees e 
+ON td.employee_id = e.employee_id 
+JOIN Trainings t 
+ON td.training_id = t.training_id 
+WHERE td.training_details_id = 
+
+-- Retrieve all trainings to populate dropdown
+SELECT training_id, title FROM Trainings;
+
+-- Retrieve all employees to populate dropdown
+SELECT DISTINCT employee_id, first_name, last_name FROM Employees;
+
 -------------------- delete_training_log
 
 -- delete selected training details : represents selected ID
