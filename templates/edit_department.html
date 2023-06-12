@@ -4,6 +4,12 @@
  #   Incorporated from:
  #   Source URL: https://epicbootstrap.com/snippets/registration
                  https://www.w3schools.com/icons/fontawesome_icons_directional.asp
+
+ #   This file uses a default value of NULL when user selects None from dropdown
+ #   Date: 5/30/2023
+ #   Incorporated from:
+ #   Source URL
+                 https://itecnote.com/tecnote/jinja2-template-variable-if-none-object-set-a-default-value/
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +44,7 @@
                     <option value="">None</option>
                     {% for employee in employees %}
                         <option value="{{ employee.employee_id }}" {% if employee.employee_id == departments[0].manager_employee_id %}selected{% endif %}>
-                            {% if employee.first_name is none and employee.last_name is none %}
+                            {% if not employee.first_name == None and employee.last_name == None %}
                                 NULL
                             {% else %}
                                 {{ employee.first_name }} {{ employee.last_name }}
