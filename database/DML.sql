@@ -26,7 +26,7 @@ SELECT role_id, title FROM Roles;
 UPDATE Employees SET first_name = :first_nameInput, last_name= :last_nameInput, email = :emailInput, dept_id= :dept_idInput, active= :activeInput, hire_date= hire_dateInput, role_id= role_idInput ADD
 WHERE id= :employee_ID_from_the_update_form;
 
--- uses LEFT JOIN - get dept_name and title instead of their IDs - retrieves all employees even if they aren't assigned a dept/role
+-- uses LEFT JOIN - get dept_name and title instead of their IDs - retrieves all employees even if they aren't assigned a dept/role : represents users selection
 SELECT e.employee_id, e.first_name, e.last_name, e.email, e.dept_id, e.active, e.hire_date, r.role_id, r.title, d.dept_id, d.dept_name 
 FROM Employees e 
 LEFT JOIN Departments d 
@@ -42,7 +42,25 @@ SELECT role_id, title FROM Roles;
 -------------------- delete_people
 
 -- delete selected employee
+
 DELETE FROM Employees WHERE employee_id = :employee_id_selected_from_employees_page; 
+
+-------------------- confirm_delete
+
+-- uses LEFT JOIN - get dept_name and title instead of their IDs : represents users selection
+SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date 
+FROM Employees e 
+LEFT JOIN Departments d 
+ON e.dept_id = d.dept_id 
+LEFT JOIN Roles r 
+ON e.role_id = r.role_id 
+WHERE e.employee_id = :employee_id_selected_for_deletion
+
+-- retrieve department name associated with id
+SELECT dept_id, dept_name FROM Departments;
+
+-- retrive title associated with id
+SELECT role_id, title FROM Roles;
 
 ----------------------------------------------------- Departments
 
