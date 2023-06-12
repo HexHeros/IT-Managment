@@ -201,7 +201,7 @@ def edit_department(dept_id):
         dept_name = request.form['dept_name']
         manager_id = request.form['manager_employee_id']
         
-        # Set manager_id to NULL if it is an empty string
+        # Set manager_id to NULL if None is selected from dropdown
         if not manager_id:
             query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = NULL WHERE dept_id = {dept_id}"
         else:
