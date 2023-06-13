@@ -60,6 +60,18 @@ Source URL:https://www.w3schools.com/sql/sql_join_left.asp  and  https://www.w3s
 # Templates/CSS citations
 
 ```
+ #   The html files use for loops to grab current information in the database
+ #   Date: 6/5/23
+ #   Incorporated from:
+ #   Source URL: https://stackoverflow.com/questions/45877080/how-to-create-dropdown-menu-from-python-list-using-flask-and-html
+```
+```
+ #   edit_department.html and departments.html uses if else to set a default value of NULL when user selects None from dropdown
+ #   Date: 5/30/2023
+ #   Incorporated from:
+ #   Source URL: https://itecnote.com/tecnote/jinja2-template-variable-if-none-object-set-a-default-value/
+```
+```
 #  These template files use these pre-made icons 
 #  Date: 5/30/2023
 #  Copied from:
