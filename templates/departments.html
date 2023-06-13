@@ -40,7 +40,13 @@
         <tr>
             <td>{{ department.dept_id }}</td>
             <td>{{ department.dept_name }}</td>
-            <td>{{ department.first_name }} {{ department.last_name }}</td>
+            <td>
+                {% if department.first_name is none and department.last_name is none %}
+                    NULL
+                {% else %}
+                    {{ department.first_name }} {{ department.last_name }}
+                {% endif %}
+            </td>
             <td><a href="/edit_department/{{ department.dept_id }}" class="edit-icon"><i class="fas fa-pencil-alt"></i></td>
             <td><a href="/delete_department/{{ department.dept_id }}" class="delete-icon"><i class="fas fa-trash-alt"></i></td>
             </tr>
