@@ -1,5 +1,13 @@
 # app.py citations
 
+### The app.py file is all based on the CS 340 starter code, with the exception of added route handlers and join queries
+
+Date: 5/25/2023
+
+Based/copied from:
+
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+
 ### In the app.py file under the Employees and edit_employee route handlers, this code was interpreted/copied from w3schools website for LEFT JOIN and aliases
 ```
 SELECT e.employee_id, e.first_name, e.last_name, e.email, d.dept_name, r.title, e.active, e.hire_date 
