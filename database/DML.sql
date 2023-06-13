@@ -72,17 +72,24 @@ ON d.manager_employee_id = e.employee_id;
 
 -------------------- new_department
 
--- POST - Retrieve the first and last name of the selected manager 
-SELECT first_name, last_name FROM Employees WHERE employee_id = :employee_id_selected_from_dropdown;
+-- insert new department with manager set to none
+INSERT INTO Departments (dept_name, manager_employee_id) 
+VALUES (:dept_nameInput, NULL);
 
--- Insert the new department with the retrieved manager_id
+-- Insert the new department with specific manager_id
 INSERT INTO Departments (dept_name, manager_employee_id)
 VALUES (:dept_nameInput, :manager_employee_id_from_dropdown_Input);
 
 -- GET - Retrieves all IDs, first and last names of employees
 SELECT employee_id, first_name, last_name FROM Employees;
 
+-- Retrieve the first and last name of the selected manager 
+SELECT first_name, last_name FROM Employees WHERE employee_id = :employee_id_selected_from_dropdown;
+
 -------------------- edit_department
+-- update a Department's manager to NULL if none is selected : represents users input
+UPDATE Departments SET dept_name = :dept_nameEdit manager_employee_id = :NULL; 
+VALUES (:dept_nameEdit, NULL)
 
 -- update a Department's manager based on the Update form : represents users input
 UPDATE Departments SET dept_name = :dept_nameEdit manager_employee_id = :new_emp_id; 
@@ -94,6 +101,9 @@ FROM Departments d
 LEFT JOIN Employees e 
 ON d.manager_employee_id = e.employee_id 
 WHERE d.dept_id = {dept_id};
+
+-- retrieves employees first name and last name for dropdown
+SELECT employee_id, first_name, last_name FROM Employees;
 
 -------------------- delete_department
 
