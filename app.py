@@ -15,6 +15,7 @@ app.config['MYSQL_USER']        = 'cs340_ogleja'
 app.config['MYSQL_PASSWORD']    = '9706' #last 4 of onid
 app.config['MYSQL_DB']          = 'cs340_ogleja'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
+
 mysql = MySQL(app)
 
 # Routes 
@@ -205,23 +206,25 @@ def edit_department(dept_id):
         
         # Set manager_id to NULL if None is selected from dropdown
         if not manager_id:
-            query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = NULL WHERE dept_id = {dept_id}"
+            query = f"UPDATE Departments SET dept_name = %s, manager_employee_id = NULL WHERE dept_id = %s;"
+            values = (dept_name, dept_id)
         else:
             # update manager_employee_id with provided value
-            query = f"UPDATE Departments SET dept_name = '{dept_name}', manager_employee_id = '{manager_id}' WHERE dept_id = {dept_id}"
+            query = f"UPDATE Departments SET dept_name = %s, manager_employee_id = %s WHERE dept_id = %s;"
+            values = (dept_name, manager_id, dept_id)
         
-        cur.execute(query)
+        cur.execute(query, values)
         mysql.connection.commit()
         return redirect(url_for('departments')) 
     
     if request.method == 'GET':
         # Retrieve departments using left join to get first_name and last_name instead of ID and ensure all departments are included even if they aren't assigned to an employee
-        query = f"SELECT DISTINCT d.dept_id, d.dept_name, d.manager_employee_id, e.first_name, e.last_name FROM Departments d LEFT JOIN Employees e ON d.manager_employee_id = e.employee_id WHERE d.dept_id = {dept_id}"
-        cur.execute(query)
+        query = f"SELECT DISTINCT d.dept_id, d.dept_name, d.manager_employee_id, e.first_name, e.last_name FROM Departments d LEFT JOIN Employees e ON d.manager_employee_id = e.employee_id WHERE d.dept_id = %s;"
+        cur.execute(query, (dept_id,))
         departments = cur.fetchall()  
  
         # Fetch all employees for the dropdown
-        query = "SELECT employee_id, first_name, last_name FROM Employees"
+        query = "SELECT employee_id, first_name, last_name FROM Employees;"
         cur.execute(query)
         employees = cur.fetchall()
         return render_template("edit_department.html", departments=departments, employees=employees)
@@ -521,9 +524,6 @@ def delete_password(id):
     mysql.connection.commit()
     # redirect back to people page
     return redirect(url_for('passwords'))
-
-
-
 
 # Listener
 if __name__ == "__main__":
