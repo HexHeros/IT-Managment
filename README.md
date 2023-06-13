@@ -72,6 +72,12 @@ Source URL:https://www.w3schools.com/sql/sql_join_left.asp  and  https://www.w3s
  #   Source URL: https://itecnote.com/tecnote/jinja2-template-variable-if-none-object-set-a-default-value/
 ```
 ```
+ #   edit_role.html uses a conditional to prefill selected information that is being edited
+ #   Date: 5/30/2023
+ #   Incorporated/copied from:
+ #   Source URL: https://stackoverflow.com/questions/73732603/bringing-select-option-values-to-select-option
+```
+```
 #  These template files use these pre-made icons 
 #  Date: 5/30/2023
 #  Copied from:
