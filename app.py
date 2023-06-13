@@ -1,4 +1,4 @@
-# This file uses the starter code from the flask starter app
+# This file is all based on the CS 340 starter code, with the exception of added route handlers and join queries
 # Date: 5/25/2023
 # Based/Adapted from:
 # Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
