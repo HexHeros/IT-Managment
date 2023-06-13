@@ -26,5 +26,3 @@ def execute_query(db_connection, query, query_params=()):
     cursor.execute(query, query_params)
     db_connection.commit()
     return cursor
-
-# Rest of your code...
