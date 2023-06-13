@@ -7,15 +7,36 @@ from flask import Flask, render_template, json, request, redirect, url_for
 from flask_mysqldb import MySQL
 import os
 
+import configparser
+import sys
+
+# Adopted from Python Documentation - configparser
+config = configparser.ConfigParser()
+config.sections()
+# Parse config. If this fails then sys exit
+try:
+    config.read('config.ini')
+except:
+    sys.exit(-1)
+
+devr_host: str = config['devri_db_creds']['host']
+devr_user: str = config['devri_db_creds']['user']
+devr_pass: str = config['devri_db_creds']['passwd']
+devr_db  : str = config['devri_db_creds']['db']
+
+# Sanitation of DB Connection Credentials
+if devr_host != "classmysql.engr.oregonstate.edu" or devr_user != "cs340_anderdev" or devr_pass != "6643" or devr_db != "cs340_anderdev":
+    sys.exit(-1)
+    
+    
 # database connection info
 app = Flask(__name__)
 app.config['DEBUG']             = True
-app.config['MYSQL_HOST']        = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER']        = 'cs340_ogleja'
-app.config['MYSQL_PASSWORD']    = '9706' #last 4 of onid
-app.config['MYSQL_DB']          = 'cs340_ogleja'
+app.config['MYSQL_HOST']        = devr_host
+app.config['MYSQL_USER']        = devr_user
+app.config['MYSQL_PASSWORD']    = devr_pass
+app.config['MYSQL_DB']          = devr_db
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
-
 mysql = MySQL(app)
 
 # Routes 
