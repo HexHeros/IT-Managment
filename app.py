@@ -15,7 +15,6 @@ app.config['MYSQL_USER']        = 'cs340_ogleja'
 app.config['MYSQL_PASSWORD']    = '9706' #last 4 of onid
 app.config['MYSQL_DB']          = 'cs340_ogleja'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
-
 mysql = MySQL(app)
 
 # Routes 
@@ -174,17 +173,18 @@ def new_department():
     cur = mysql.connection.cursor()
     if request.method == "POST":
         dept_name = request.form["dept_name"]
-        manager_id = int(request.form['manager_employee_id'])  # Get the selected manager's ID
+        manager_id = request.form['manager_employee_id'] 
+        
+        # set manager_id to NULL if None is selected from dropdown
+        if not manager_id:
+            query = "INSERT INTO Departments (dept_name, manager_employee_id) VALUES (%s, NULL);"
+            values = (dept_name,)
+        else:
+            query = "INSERT INTO Departments (dept_name, manager_employee_id) VALUES (%s, %s);"
+            values = (dept_name, manager_id)
             
-        # Retrieve the corresponding first_name and last_name of the selected manager
-        query = "SELECT first_name, last_name FROM Employees WHERE employee_id = %s"
-        cur.execute(query, (manager_id,))
+        cur.execute(query, values)
         managers = cur.fetchall()
-
-        # Insert the new department with the retrieved manager_id
-        query = "INSERT INTO Departments (dept_name, manager_employee_id)\n"
-        vals = f"VALUES ('{dept_name}', {manager_id})"
-        cur.execute(query+vals)
         mysql.connection.commit()
         return redirect(url_for('departments'))
     else:
