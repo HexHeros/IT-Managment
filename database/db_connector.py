@@ -2,71 +2,29 @@ import MySQLdb
 import os
 from dotenv import load_dotenv, find_dotenv
 
-# Load our environment variables from the .env file in the root of our project.
+# Load environment variables from .env file
 load_dotenv(find_dotenv())
 
-# Set the variables in our application with those environment variables
-host = os.environ.get("340DBHOST")
-user = os.environ.get("340DBUSER")
-passwd = os.environ.get("340DBPW")
-db = os.environ.get("340DB")
+# Get database credentials from environment variables
+host = os.environ.get("DB_HOST")
+user = os.environ.get("DB_USER")
+passwd = os.environ.get("DB_PASSWORD")
+db = os.environ.get("DB_NAME")
 
-# Hardcoded
-host = 'classmysql.engr.oregonstate.edu'      # MUST BE THIS
-user = 'cs340_ogleja'       # don't forget the cs340_ prefix
-passwd = '9706'               # should only be 4 digits if default
-db = 'cs340_ogleja'                                  
-
-def connect_to_database(host = host, user = user, passwd = passwd, db = db):
+def connect_to_database():
     '''
-    connects to a database and returns a database objects
+    Connects to the database and returns a database connection object.
     '''
-    db_connection = MySQLdb.connect(host,user,passwd,db)
+    db_connection = MySQLdb.connect(host, user, passwd, db)
     return db_connection
 
-def execute_query(db_connection = None, query = None, query_params = ()):
+def execute_query(db_connection, query, query_params=()):
     '''
-    executes a given SQL query on the given db connection and returns a Cursor object
-
-    db_connection: a MySQLdb connection object created by connect_to_database()
-    query: string containing SQL query
-
-    returns: A Cursor object as specified at https://www.python.org/dev/peps/pep-0249/#cursor-objects.
-    You need to run .fetchall() or .fetchone() on that object to actually acccess the results.
-
+    Executes a given SQL query on the given database connection and returns a Cursor object.
     '''
-
-    if db_connection is None:
-        print("No connection to the database found! Have you called connect_to_database() first?")
-        return None
-
-    if query is None or len(query.strip()) == 0:
-        print("query is empty! Please pass a SQL query in query")
-        return None
-
-    print("Executing %s with %s" % (query, query_params));
-    # Create a cursor to execute query. Why? Because apparently they optimize execution by retaining a reference according to PEP0249
     cursor = db_connection.cursor(MySQLdb.cursors.DictCursor)
-
-    '''
-    params = tuple()
-    #create a tuple of paramters to send with the query
-    for q in query_params:
-        params = params + (q)
-    '''
-    #TODO: Sanitize the query before executing it!!!
     cursor.execute(query, query_params)
-    # this will actually commit any changes to the database. without this no
-    # changes will be committed!
-    db_connection.commit();
+    db_connection.commit()
     return cursor
 
-if __name__ == '__main__':
-    print("Executing a sample query on the database using the credentials from db_credentials.py")
-    db = connect_to_database()
-    query = "SELECT * from bsg_people;"
-    results = execute_query(db, query);
-    print("Printing results of %s" % query)
-
-    for r in results.fetchall():
-        print(r)
+# Rest of your code...
