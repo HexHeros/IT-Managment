@@ -4,6 +4,11 @@
  #   Incorporated from:
  #   Source URL: https://epicbootstrap.com/snippets/registration
                  https://www.w3schools.com/icons/fontawesome_icons_directional.asp
+
+ #   This file uses a conditional to prefill selected information that is being edited
+ #   Date: 5/30/2023
+ #   Incorporated/copied from:
+ #   Source URL: https://stackoverflow.com/questions/73732603/bringing-select-option-values-to-select-option
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -37,16 +42,16 @@
             <div class="form-group">
                 <label for="access_level">Access Level:</label>
                 <select id="access_level" name="access_level">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+                    <option value="1"{% if roles[0].access_level == 1 %}selected{% endif %}>1</option>
+                    <option value="2"{% if roles[0].access_level == 2 %}selected{% endif %}>2</option>
+                    <option value="3"{% if roles[0].access_level == 3 %}selected{% endif %}>3</option>
+                    <option value="4"{% if roles[0].access_level == 4 %}selected{% endif %}>4</option>
+                    <option value="5"{% if roles[0].access_level == 5 %}selected{% endif %}>5</option>
+                    <option value="6"{% if roles[0].access_level == 6 %}selected{% endif %}>6</option>
+                    <option value="7"{% if roles[0].access_level == 7 %}selected{% endif %}>7</option>
+                    <option value="8"{% if roles[0].access_level == 8 %}selected{% endif %}>8</option>
+                    <option value="9"{% if roles[0].access_level == 9 %}selected{% endif %}>9</option>
+                    <option value="10"{% if roles[0].access_level == 10 %}selected{% endif %}>10</option>
                 </select>
             </div>
             <br>
