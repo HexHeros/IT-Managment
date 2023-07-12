@@ -6,37 +6,22 @@
 from flask import Flask, render_template, json, request, redirect, url_for
 from flask_mysqldb import MySQL
 import os
+import logging
+from dotenv import load_dotenv
 
-import configparser
-import sys
+# Load environment variables from .env file
+load_dotenv()
 
-# Adopted from Python Documentation - configparser
-config = configparser.ConfigParser()
-config.sections()
-# Parse config. If this fails then sys exit
-try:
-    config.read('config.ini')
-except:
-    sys.exit(-1)
+# Create Flask app
+app = Flask(__name__, static_folder='static')
 
-devr_host: str = config['devri_db_creds']['host']
-devr_user: str = config['devri_db_creds']['user']
-devr_pass: str = config['devri_db_creds']['passwd']
-devr_db  : str = config['devri_db_creds']['db']
+# Configure MySQL connection
+app.config["MYSQL_HOST"] = os.environ.get("DB_HOST")
+app.config["MYSQL_USER"] = os.environ.get("DB_USER")
+app.config["MYSQL_PASSWORD"] = os.environ.get("DB_PASSWORD")
+app.config["MYSQL_DB"] = os.environ.get("DB_NAME")
+app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
-# Sanitation of DB Connection Credentials
-if devr_host != "classmysql.engr.oregonstate.edu" or devr_user != "cs340_anderdev" or devr_pass != "6643" or devr_db != "cs340_anderdev":
-    sys.exit(-1)
-    
-    
-# database connection info
-app = Flask(__name__)
-app.config['DEBUG']             = True
-app.config['MYSQL_HOST']        = devr_host
-app.config['MYSQL_USER']        = devr_user
-app.config['MYSQL_PASSWORD']    = devr_pass
-app.config['MYSQL_DB']          = devr_db
-app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 mysql = MySQL(app)
 
 # Routes 
@@ -546,7 +531,8 @@ def delete_password(id):
     # redirect back to people page
     return redirect(url_for('passwords'))
 
+
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9707))
+    port = int(os.environ.get('PORT', 11328))
     app.run(port=port, debug=True)
